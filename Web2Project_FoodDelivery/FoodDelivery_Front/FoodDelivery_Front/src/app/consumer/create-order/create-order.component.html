@@ -1,1 +1,21 @@
-<p>create-order works!</p>
+<h2>Create Order</h2>
+<div>
+    <ol>
+        <ng-container *ngFor="let product of products; let i=index">
+            <li>
+                <h3>{{product.name}}</h3>
+                <p>Price: {{product.price}}</p>
+                <p>Ingredients: {{product.ingredients}}</p>
+
+                <form [formGroup]="form" (submit)="addToCart(i)">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Amount</mat-label>
+                        <input formControlName="amount" matInput type="number"/>
+                    </mat-form-field>
+
+                    <button mat-flat-button color="primary" [disabled]="form.invalid">Add</button>
+                </form>
+            </li>
+        </ng-container>
+    </ol>
+</div>

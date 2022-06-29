@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
-import { userCreationDto } from '../users.model';
+import { userCreationDto } from 'src/app/models/user.model';
 import { toBase64 } from 'src/app/utilities/image';
 
 @Component({

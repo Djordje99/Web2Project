@@ -1,1 +1,25 @@
-<p>available-orders works!</p>
+<h2>Available Orders</h2>
+
+<div>
+    <ol>
+        <ng-container *ngFor="let order of orders; let i = index">
+            <li>
+                <p>Address: {{order.address}}</p>
+                <p>Price: {{order.price}}</p>
+                <p>Comment: {{order.comment}}</p>
+                <ol>
+                    <ng-container *ngFor="let product of order.products; let j=index">
+                        <li>
+                            <h3>{{product.name}}</h3>
+                            <p>Price: {{product.price}}</p>
+                            <p>Ingredients: {{product.ingredients}}</p>
+                            <p>Amount: {{product.amount}}</p>
+                        </li>
+                    </ng-container>
+                <button mat-flat-button color="primary" (click)="takeOrder(i)">Take Order</button>
+                </ol>
+            </li>
+        </ng-container>
+    </ol>
+</div>
+

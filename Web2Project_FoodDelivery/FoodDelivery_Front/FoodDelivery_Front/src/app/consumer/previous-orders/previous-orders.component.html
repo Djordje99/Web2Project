@@ -1,1 +1,23 @@
-<p>previous-orders works!</p>
+<h2>Previous Orders</h2>
+
+<div>
+    <ol>
+        <ng-container *ngFor="let order of orders; let i = index">
+            <li>
+                <p>Address: {{order.address}}</p>
+                <p>Price: {{order.price}}</p>
+                <p>Comment: {{order.comment}}</p>
+                <ol>
+                    <ng-container *ngFor="let product of order.products; let i=index">
+                        <li>
+                            <h3>{{product.name}}</h3>
+                            <p>Price: {{product.price}}</p>
+                            <p>Ingredients: {{product.ingredients}}</p>
+                            <p>Amount: {{product.amount}}</p>
+                        </li>
+                    </ng-container>
+                </ol>
+            </li>
+        </ng-container>
+    </ol>
+</div>

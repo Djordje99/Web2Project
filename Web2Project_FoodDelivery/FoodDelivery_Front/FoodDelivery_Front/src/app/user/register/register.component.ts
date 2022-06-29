@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { userCreationDto } from '../users.model';
+import { userCreationDto } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-register',

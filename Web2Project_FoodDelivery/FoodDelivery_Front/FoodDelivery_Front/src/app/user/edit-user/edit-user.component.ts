@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { userCreationDto } from '../users.model';
-
+import { userCreationDto } from 'src/app/models/user.model';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',

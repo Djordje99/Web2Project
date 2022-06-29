@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http'
+import {ToastrModule} from 'ngx-toastr'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +25,7 @@ import { DeliveredOrdersComponent } from './deliverer/delivered-orders/delivered
 import { ActualOrderComponent } from './deliverer/actual-order/actual-order.component';
 import { AllOrdersComponent } from './admin/all-orders/all-orders.component';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
+import { OrderProductsComponent } from './consumer/order-products/order-products.component';
 
 @NgModule({
   declarations: [
@@ -43,14 +46,17 @@ import { CreateProductComponent } from './admin/create-product/create-product.co
     DeliveredOrdersComponent,
     ActualOrderComponent,
     AllOrdersComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    OrderProductsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,12 @@
+export class Token{
+    token: string = '';
+}
+
+export class LogInClass{
+    email:string = '';
+    password:string = '';
+}
+
 export interface userCreationDto{
     username: string;
     email: string;

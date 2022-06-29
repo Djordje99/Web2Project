@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Token } from 'src/app/models/user.model';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-log-in',
@@ -8,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LogInComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router, private toastr: ToastrService) {}
 
   form = this.formBuilder.group({
     email: ['', {
@@ -22,7 +26,17 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {}
 
   logIn(){
-    alert("some")
+    const email =  this.form.controls['email'].value
+    const password = this.form.controls['password'].value
+    this.userService.logIn(email, password).subscribe(
+      (data: Token) => {
+        localStorage.setItem('token', data.token)
+        this.router.navigateByUrl('')
+      },
+      error => {
+        this.toastr.error('Incorrect username or password.', 'Authentication failed.');
+      }
+    )
   }
 
   getErrorForEmail(){

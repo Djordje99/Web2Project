@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerificationComponent implements OnInit {
 
+  index: number = 10;
+
   constructor() { }
 
+  users = [{username: "pera", verified: false}, {username: "laza", verified: false}]
+
   ngOnInit(): void {
+  }
+
+  accept(index: number){
+    console.log(index)
+  }
+
+  decline(index: number){
+    console.log(index)
   }
 
 }
