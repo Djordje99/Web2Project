@@ -21,7 +21,7 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("activate")]
-        public IActionResult ActivateUser(string email)
+        public IActionResult ActivateUser([FromBody]UserEmailDto email)
         {
             return Ok(_adminService.ActivateUser(email));
         }

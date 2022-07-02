@@ -12,10 +12,7 @@ import { MenuComponent } from './menu/menu.component';
 import {ReactiveFormsModule} from '@angular/forms'
 import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './home/home.component';
-import { RegisterFormComponent } from './user/register-form/register-form.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
-import { DelivererReviewComponent } from './admin/deliverer-review/deliverer-review.component';
-import { ConsumerReviewComponent } from './admin/consumer-review/consumer-review.component';
 import { CreateOrderComponent } from './consumer/create-order/create-order.component';
 import { PreviousOrdersComponent } from './consumer/previous-orders/previous-orders.component';
 import { VerificationComponent } from './admin/verification/verification.component';
@@ -29,6 +26,9 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { PickProductsComponent } from './consumer/pick-products/pick-products.component';
 import { CurrentOrderComponent } from './consumer/current-order/current-order.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import { ActivationComponent } from './admin/activation/activation.component';
+import { OAuthModule } from 'angular-oauth2-oidc';
+
 
 @NgModule({
   declarations: [
@@ -37,10 +37,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     RegisterComponent,
     MenuComponent,
     HomeComponent,
-    RegisterFormComponent,
     EditUserComponent,
-    DelivererReviewComponent,
-    ConsumerReviewComponent,
     CreateOrderComponent,
     PreviousOrdersComponent,
     VerificationComponent,
@@ -54,6 +51,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     PickProductsComponent,
     CurrentOrderComponent,
     OrderDetailsComponent,
+    ActivationComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +60,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    OAuthModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

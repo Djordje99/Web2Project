@@ -10,6 +10,7 @@ import {MatSelectModule} from '@angular/material/select'
 import {MatDatepickerModule} from '@angular/material/datepicker'
 import {MatNativeDateModule} from '@angular/material/core'
 import {MatTableModule} from '@angular/material/table'
+import {MatCardModule} from '@angular/material/card'
 
 @NgModule({
   declarations: [],
@@ -22,7 +23,8 @@ import {MatTableModule} from '@angular/material/table'
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTableModule
+    MatTableModule,
+    MatCardModule
   ],
   imports: [
     CommonModule

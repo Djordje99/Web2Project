@@ -1,3 +1,79 @@
-<h2>Register</h2>
+<div class="main-div">
+    <mat-card style="text-align: center;">
+        <mat-card-title>
+            Register
+        </mat-card-title>
 
-<app-register-form (onSaveChanges)="register($event)"></app-register-form>
+        <mat-card-content>
+            <form (submit)="register()" [formGroup]="form">
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input formControlName="username" matInput />
+                        <mat-error *ngIf="form.invalid">{{getError('username')}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" matInput />
+                        <mat-error *ngIf="form.invalid">{{getError('email')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input formControlName="password" matInput type="password"/>
+                        <mat-error *ngIf="form.invalid">{{getError('password')}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Repeat Password</mat-label>
+                        <input formControlName="passwordVerify" matInput type="password"/>
+                        <mat-error *ngIf="form.invalid">{{getError('password')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input formControlName="firstName" matInput />
+                        <mat-error *ngIf="form.invalid">{{getError('firstName')}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input formControlName="lastName" matInput />
+                        <mat-error *ngIf="form.invalid">{{getError('lastName')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Birthday</mat-label>
+                        <input formControlName="birthday" matInput [matDatepicker]="datepicker" />
+                        <mat-error *ngIf="form.invalid">{{getError('birthday')}}</mat-error>
+                        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <input formControlName="address" matInput />
+                        <mat-error *ngIf="form.invalid">{{getError('address')}}</mat-error>
+                        <mat-label>Address</mat-label>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Select User Type" formControlName="userType">
+                            <mat-option value="1">Consumer</mat-option>
+                            <mat-option value="2">Deliverer</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.invalid">{{getError('userType')}}</mat-error>
+                    </mat-form-field>
+
+                    <button class="field" type="button" mat-flat-button color="primary" (click)="imageInput.click()">Select Image</button>
+                    <input type="file" hidden #imageInput accept="image/png, image/jpeg, image/jpg" />
+                </div>
+                <div>
+                    <button mat-flat-button color="primary" [disabled]="form.invalid">Register</button>
+                    <a mat-stroked-button routerLink="">Cancel</a>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+

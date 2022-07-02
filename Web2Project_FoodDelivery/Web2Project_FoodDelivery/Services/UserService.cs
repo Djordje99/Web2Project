@@ -36,7 +36,7 @@ namespace Web2Project_FoodDelivery.Services
             user = _dbContext.Users.Find(userToLog.Email);
             List<Claim> claims = new List<Claim>();
 
-            if(user == null || user.Veryfied == VeryfiedType.Denied || user.Veryfied == VeryfiedType.InProgress)
+            if(user == null || user.Veryfied != VeryfiedType.Approved || user.AccepredRegistration == false)
                 return null;
 
             if (BCrypt.Net.BCrypt.Verify(userToLog.Password, user.Password, false, BCrypt.Net.HashType.SHA256))
@@ -83,6 +83,7 @@ namespace Web2Project_FoodDelivery.Services
             UserModel userModel = _dbContext.Users.Find(userToRegister.Email);
             UserType ut = UserType.Consumer;
             var veryfied = VeryfiedType.Approved;
+            var activate = false;
             if (userToRegister.UserType == 2)
             {
                 ut = UserType.Deliverer;
@@ -90,7 +91,10 @@ namespace Web2Project_FoodDelivery.Services
 
             }
             else if (userToRegister.UserType == 0)
+            {
                 ut = UserType.Admin;
+                activate = true;
+            }
 
             if (userModel != null || userToRegister.Password != userToRegister.PasswordVerify)
                 return null;
@@ -106,7 +110,7 @@ namespace Web2Project_FoodDelivery.Services
                 Birthday = userToRegister.Birthday,
                 Picture = userToRegister.Photo,
                 Veryfied = veryfied,
-                AccepredRegistration = false,
+                AccepredRegistration = activate,
                 Type = ut
             };
 

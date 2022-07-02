@@ -21,9 +21,9 @@ namespace Web2Project_FoodDelivery.Services
             _mapper = mapper;
             _dbContext = dbContext;
         }
-        public bool ActivateUser(string email)
+        public bool ActivateUser(UserEmailDto email)
         {
-            UserModel user = _dbContext.Users.Find(email);
+            UserModel user = _dbContext.Users.Find(email.Email);
 
             if (user.Type != Enums.Enums.UserType.Consumer && user.Type != Enums.Enums.UserType.Deliverer)
                 return false;

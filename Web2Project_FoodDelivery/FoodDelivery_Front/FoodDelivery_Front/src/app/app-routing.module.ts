@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ActivationComponent } from './admin/activation/activation.component';
 import { AllOrdersComponent } from './admin/all-orders/all-orders.component';
-import { ConsumerReviewComponent } from './admin/consumer-review/consumer-review.component';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
-import { DelivererReviewComponent } from './admin/deliverer-review/deliverer-review.component';
 import { VerificationComponent } from './admin/verification/verification.component';
 import { CreateOrderComponent } from './consumer/create-order/create-order.component';
 import { CurrentOrderComponent } from './consumer/current-order/current-order.component';
@@ -27,11 +26,10 @@ const routes: Routes = [
   {path: 'user/profile', component: ProfileComponent},
   {path: 'user/edit/:id', component: EditUserComponent},
 
-  {path: 'admin/deliverer/review', component: DelivererReviewComponent},
-  {path: 'admin/consumer/review', component: ConsumerReviewComponent},
   {path: 'admin/verification', component: VerificationComponent},
   {path: 'admin/all-orders', component: AllOrdersComponent},
   {path: 'admin/create-product', component: CreateProductComponent},
+  {path: 'admin/activation', component: ActivationComponent},
 
   {path: 'consumer/create-order', component: CreateOrderComponent},
   {path: 'consumer/order-products', component: OrderProductsComponent},

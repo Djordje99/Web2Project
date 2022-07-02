@@ -1,22 +1,32 @@
-<h2>Log In</h2>
-
-<form (submit)="logIn()" [formGroup]="form">
-	<div>
-		<mat-form-field appearance="outline">
-			<mat-label>Email</mat-label>
-			<input formControlName="email" matInput />
-			<mat-error *ngIf="form.invalid">{{getErrorForEmail()}}</mat-error>
-		</mat-form-field>
-	</div>
-	<div>
-		<mat-form-field appearance="outline">
-			<mat-label>Password</mat-label>
-			<input formControlName="password" matInput type="password"/>
-			<mat-error *ngIf="form.invalid">{{getErrorForPassword()}}</mat-error>
-		</mat-form-field>
-	</div>
-	<div>
-		<button mat-flat-button color="primary" [disabled]="form.invalid">Log In</button>
-		<a mat-stroked-button routerLink="">Cancel</a>
-	</div>
-</form>
+<div class="main-div">
+	<mat-card style="text-align: center;">
+		<mat-card-title>
+			Log In
+		</mat-card-title>
+		<mat-card-content>
+			<form (submit)="logIn()" [formGroup]="form">
+				<div>
+					<mat-form-field appearance="outline">
+						<mat-label>Email</mat-label>
+						<input formControlName="email" matInput />
+						<mat-error *ngIf="form.invalid">{{getErrorForEmail()}}</mat-error>
+					</mat-form-field>
+				</div>
+				<div>
+					<mat-form-field appearance="outline">
+						<mat-label>Password</mat-label>
+						<input formControlName="password" matInput type="password"/>
+						<mat-error *ngIf="form.invalid">{{getErrorForPassword()}}</mat-error>
+					</mat-form-field>
+				</div>
+				<div>
+					<button style="margin-right:5px;" mat-flat-button color="primary" [disabled]="form.invalid">Log In</button>
+					<a style="margin-right:5px;" mat-stroked-button routerLink="">Cancel</a>
+				</div>
+			</form>
+			<div>
+				<button mat-flat-button color="warn" (click)="googleApi.auth()">Google Log in</button>
+			</div>
+		</mat-card-content>
+	</mat-card>
+</div>

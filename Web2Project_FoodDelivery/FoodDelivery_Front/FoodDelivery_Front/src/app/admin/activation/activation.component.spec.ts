@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DelivererReviewComponent } from './deliverer-review.component';
+import { ActivationComponent } from './activation.component';
 
-describe('DelivererReviewComponent', () => {
-  let component: DelivererReviewComponent;
-  let fixture: ComponentFixture<DelivererReviewComponent>;
+describe('ActivationComponent', () => {
+  let component: ActivationComponent;
+  let fixture: ComponentFixture<ActivationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DelivererReviewComponent ]
+      declarations: [ ActivationComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DelivererReviewComponent);
+    fixture = TestBed.createComponent(ActivationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
