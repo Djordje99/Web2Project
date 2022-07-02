@@ -21,23 +21,27 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login([FromBody] LogInUserDto user)
         {
-            return Ok(_consumerService.Login(email, password));
+            var returnValue = _consumerService.Login(user);
+            if (returnValue == null)
+                return BadRequest("Login failed.");
+
+            return Ok(returnValue);
         }
 
         [HttpPost("register")]
-        public IActionResult Register(string firstName, string lastName, 
-                                      string email, string password, 
-                                      string passwordVerify, string username, 
-                                      DateTime birthday, string address,
-                                      string photo, Enums.Enums.UserType userType)
+        public IActionResult Register([FromBody] RegisterUserDto user)
         {
-            return Ok(_consumerService.Register(firstName, lastName, email, password, passwordVerify, username, birthday, address, photo, userType));
+            var returnValue = _consumerService.Register(user);
+            if (returnValue == null)
+                return BadRequest("Register failed.");
+
+            return Ok(returnValue);
         }
 
-        [HttpGet("find")]
-        public IActionResult FindUser(string email)
+        [HttpPost("find")]
+        public IActionResult FindUser([FromBody] UserEmailDto email)
         {
             return Ok(_consumerService.FindById(email));
         }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { userCreationDto } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { UserCreationDto } from 'src/app/models/user.model';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
@@ -9,12 +11,19 @@ import { userCreationDto } from 'src/app/models/user.model';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
-  register(userCreationDto: userCreationDto){
-    console.log(userCreationDto)
+  register(userCreationDto: UserCreationDto){
+    this.userService.register(userCreationDto).subscribe(
+      (data : UserCreationDto) => {
+        this.router.navigateByUrl('/user/login');
+      },
+      error => {
+          this.toastr.error('User already exists.', 'Authentication failed.');
+      }
+    );
   }
 }

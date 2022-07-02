@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
-import { userCreationDto } from 'src/app/models/user.model';
+import { UserCreationDto } from 'src/app/models/user.model';
 import { toBase64 } from 'src/app/utilities/image';
 
 @Component({
@@ -14,10 +14,10 @@ export class RegisterFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   @Input()
-  model?: userCreationDto;
+  model?: UserCreationDto;
 
   @Output()
-  onSaveChanges: EventEmitter<userCreationDto> = new EventEmitter<userCreationDto>();
+  onSaveChanges: EventEmitter<UserCreationDto> = new EventEmitter<UserCreationDto>();
 
   form = this.formBuilder.group({
     username: ['', {
@@ -29,7 +29,7 @@ export class RegisterFormComponent implements OnInit {
     password: ['', {
       validators: [Validators.required]
     }],
-    passwordRepeat: ['', {
+    passwordVerify: ['', {
       validators: [Validators.required]
     }],
     firstName: ['', {
@@ -47,9 +47,7 @@ export class RegisterFormComponent implements OnInit {
     userType: ['', {
       validators: [Validators.required]
     }],
-    photo: ['', {
-      validators: [Validators.required]
-    }]
+    photo: ['']
   });
 
   imageBase64: string = '';
@@ -57,6 +55,10 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
     if(this.model !== undefined){
       this.form.patchValue(this.model)
+      console.log("razlicit");
+    }
+    else{
+      console.log("nema modela")
     }
   }
 

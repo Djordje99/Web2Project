@@ -3,8 +3,9 @@
 <div>
     <ol>
         <ng-container *ngFor="let user of users; let i = index">
-            <li *ngIf="user.verified == false">
+            <li *ngIf="user.verified !== 0">
                 <p>{{user.username}}</p>
+                <p>{{user.firstName}} {{user.lastName}}</p>
                 <button mat-flat-button color="primary" (click)="accept(i)">Accept</button>
                 <button mat-flat-button color="primary" (click)="decline(i)">Decline</button>
             </li>

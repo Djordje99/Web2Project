@@ -8,7 +8,7 @@ namespace Web2Project_FoodDelivery.Interfaces
 {
     public interface IAdminService
     {
-        bool VerifyDeliverer(string email, Enums.Enums.VeryfiedType status);
+        bool VerifyDeliverer(VerifyDto delivererVerify);
         bool ActivateUser(string email);
         List<UserDto> SeeDelivererStatus();
         List<UserDto> SeeActivationRequests();

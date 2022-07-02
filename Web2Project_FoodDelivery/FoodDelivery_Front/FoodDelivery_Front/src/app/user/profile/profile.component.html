@@ -1,1 +1,9 @@
-<p>profile works!</p>
+<h2>Current User</h2>
+
+<div>
+    <p>First Name: {{user[0].firstName}} Last Name: {{user[0].lastName}}</p>
+    <p>Email: {{user[0].email}} Username: {{user[0].username}}</p>
+    <p>Address: {{user[0].address}} Birthday: {{user[0].birthday}}</p>
+    <p>User Type: {{user[0].userType}} Verified: {{user[0].verified}}</p>
+    <button mat-flat-button color="primary" routerLink="/user/edit/1">Edit</button>
+</div>

@@ -1,0 +1,13 @@
+<h2>Order Details</h2>
+
+<div>
+    <p>{{order.address}}</p>
+    <p>{{order.comment}}</p>
+    <p>{{order.status}}</p>
+    <ng-container *ngFor="let product of products">
+        <p>{{product.name}}</p>
+        <p>{{product.ingredients}}</p>
+        <p>{{product.price}}</p>
+        <p>{{product.amount}}</p>
+    </ng-container>
+</div>

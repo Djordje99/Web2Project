@@ -8,15 +8,11 @@ namespace Web2Project_FoodDelivery.Interfaces
 {
     public interface IUserService
     {
-        string Login(string email, string password);
-        UserDto Register(string firstName, string lastName,
-                         string email, string password,
-                         string passwordVerify, string username,
-                         DateTime birthday, string address,
-                         string photo, Enums.Enums.UserType userType);
+        TokenDto Login(LogInUserDto user);
+        UserDto Register(RegisterUserDto user);
         bool UpdateUser(UserDto updateUser);
         bool DeleteUser(string email);
         List<UserDto> RetrieveUsers();
-        UserDto FindById(string email);
+        UserDto FindById(UserEmailDto email);
     }
 }

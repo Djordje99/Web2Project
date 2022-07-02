@@ -15,6 +15,7 @@ namespace Web2Project_FoodDelivery.Services
     {
         private readonly IMapper _mapper;
         private readonly FoodDeliveryDbContext _dbContext;
+        private List<ProductDto> products = new List<ProductDto>();
 
         public ConsumerService(IMapper mapper, FoodDeliveryDbContext dbContext, IConfiguration config)
         {
@@ -26,59 +27,34 @@ namespace Web2Project_FoodDelivery.Services
         {
             OrderModel order = _mapper.Map<OrderModel>(newOrder);
 
-            order.Status = Enums.Enums.OrderStatusType.Prepering;
+            order.Status = Enums.Enums.OrderStatusType.Wating;
 
             _dbContext.Orders.Add(order);
             _dbContext.SaveChanges();
 
-            return newOrder;
+            return _mapper.Map<OrderDto>(order);
         }
 
-        public bool Order(long orderId)
+        public OrderDetailsDto AddProdactOrder(OrderDetailsDto product)
         {
-            var order = _dbContext.Orders.Find(orderId);
+            var productDb = _dbContext.Products.Find(product.ProductId);
 
-            if (order == null)
-                return false;
-
-            order.Status = Enums.Enums.OrderStatusType.Wating;
-
-            _dbContext.Orders.Update(order);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
-        public OrderDetailsDto AddOrderDetail(long orderId, long productId, int amount)
-        {
-            var order = _dbContext.Orders.Find(orderId);
-            var product = _dbContext.Products.Find(productId);
-
-            if (order.Status != Enums.Enums.OrderStatusType.Prepering || product == null)
+            if (productDb == null)
                 return null;
 
-            OrderDetailsDto orderDetails = new OrderDetailsDto
-            {
-                OrderId = orderId,
-                ProductId = productId,
-                Amount = amount,
-                OrderDate = DateTime.Now,
-                CurrentPrice = product.Price
-            };
+            var productDetail = _mapper.Map<OrderDetailsModel>(product);
 
-            var orderDetailsModel = _mapper.Map<OrderDetailsModel>(orderDetails);
-
-            _dbContext.OrderDetails.Add(orderDetailsModel);
+            _dbContext.OrderDetails.Add(productDetail);
             _dbContext.SaveChanges();
 
-            return orderDetails;
+            return _mapper.Map<OrderDetailsDto>(productDetail);
         }
 
-        public List<OrderDto> GetOrders(string email)
+        public List<OrderDto> GetOrders(UserEmailDto email)
         {
             List<OrderDto> orders = new List<OrderDto>();
 
-            var ordersModel = _dbContext.Orders.Where(x => x.CreatorEmail == email && x.Status == Enums.Enums.OrderStatusType.Delivered).ToList();
+            var ordersModel = _dbContext.Orders.Where(x => x.CreatorEmail == email.Email && x.Status == Enums.Enums.OrderStatusType.Delivered).ToList();
 
             foreach (var item in ordersModel)
             {
@@ -88,20 +64,37 @@ namespace Web2Project_FoodDelivery.Services
             return orders;
         }
 
-        public List<OrderDetailsDto> GetOrdersDetails(string email)
+        public List<OrderDto> GetCurrentOrders(UserEmailDto email)
         {
-            var orders = GetOrders(email);
+            List<OrderDto> orders = new List<OrderDto>();
 
-            List<OrderDetailsDto> orderDetails = new List<OrderDetailsDto>();
+            var ordersModel = _dbContext.Orders.Where(x => x.CreatorEmail == email.Email && x.Status != Enums.Enums.OrderStatusType.Delivered).ToList();
 
-            foreach (var item in orders)
+            foreach (var item in ordersModel)
             {
-                var details = _dbContext.OrderDetails.Where(x => x.OrderId == item.Id);
+                orders.Add(_mapper.Map<OrderDto>(item));
+            }
 
-                foreach (var item2 in details)
-                {
-                    orderDetails.Add(_mapper.Map<OrderDetailsDto>(item2));
-                }
+            return orders;
+        }
+
+
+        public List<ProductDto> GetOrdersDetails(UserProductsDto userProducts)
+        {
+
+            //var orders = GetOrders(new UserEmailDto { Email = userProducts.Email });
+            //var order = orders.Find(x => x.Id == userProducts.OrderId);
+
+            List<ProductDto> orderDetails = new List<ProductDto>();
+
+            var details = _dbContext.OrderDetails.Where(x => x.OrderId == userProducts.OrderId);
+
+            foreach (var item in details)
+            {
+                var productModel = _dbContext.Products.Find(item.ProductId);
+                ProductDto productDto = _mapper.Map<ProductDto>(productModel);
+                productDto.Amount = item.Amount;
+                orderDetails.Add(productDto);
             }
 
             return orderDetails;

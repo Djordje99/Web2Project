@@ -6,7 +6,9 @@ import { CreateProductComponent } from './admin/create-product/create-product.co
 import { DelivererReviewComponent } from './admin/deliverer-review/deliverer-review.component';
 import { VerificationComponent } from './admin/verification/verification.component';
 import { CreateOrderComponent } from './consumer/create-order/create-order.component';
+import { CurrentOrderComponent } from './consumer/current-order/current-order.component';
 import { OrderProductsComponent } from './consumer/order-products/order-products.component';
+import { PickProductsComponent } from './consumer/pick-products/pick-products.component';
 import { PreviousOrdersComponent } from './consumer/previous-orders/previous-orders.component';
 import { ActualOrderComponent } from './deliverer/actual-order/actual-order.component';
 import { AvailableOrdersComponent } from './deliverer/available-orders/available-orders.component';
@@ -22,8 +24,8 @@ const routes: Routes = [
 
   {path: 'user/register', component: RegisterComponent},
   {path: 'user/login', component: LogInComponent},
+  {path: 'user/profile', component: ProfileComponent},
   {path: 'user/edit/:id', component: EditUserComponent},
-  {path: 'user/profile/:id', component: ProfileComponent},
 
   {path: 'admin/deliverer/review', component: DelivererReviewComponent},
   {path: 'admin/consumer/review', component: ConsumerReviewComponent},
@@ -34,6 +36,9 @@ const routes: Routes = [
   {path: 'consumer/create-order', component: CreateOrderComponent},
   {path: 'consumer/order-products', component: OrderProductsComponent},
   {path: 'consumer/previous-order', component: PreviousOrdersComponent},
+  {path: 'consumer/pick-products', component: PickProductsComponent},
+  {path: 'consumer/current-order', component: CurrentOrderComponent},
+
 
   {path: 'deliverer/available-order', component: AvailableOrdersComponent},
   {path: 'deliverer/delivered-order', component: DeliveredOrdersComponent},

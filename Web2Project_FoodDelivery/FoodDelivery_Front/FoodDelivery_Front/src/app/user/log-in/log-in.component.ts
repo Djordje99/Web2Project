@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Token } from 'src/app/models/user.model';
+import { LogInClass, Token } from 'src/app/models/user.model';
 import { UserService } from '../user.service';
 
 @Component({
@@ -26,17 +26,19 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {}
 
   logIn(){
-    const email =  this.form.controls['email'].value
-    const password = this.form.controls['password'].value
-    this.userService.logIn(email, password).subscribe(
-      (data: Token) => {
-        localStorage.setItem('token', data.token)
-        this.router.navigateByUrl('')
+    let user:LogInClass = new LogInClass();
+    user.email =  this.form.controls['email'].value;
+    user.password = this.form.controls['password'].value;
+
+    this.userService.login(user).subscribe(
+      (data : Token) => {
+        localStorage.setItem('token', data.token);
+        this.router.navigateByUrl('');
       },
       error => {
-        this.toastr.error('Incorrect username or password.', 'Authentication failed.');
+          this.toastr.error('Incorrect username or password.', 'Authentication failed.');
       }
-    )
+    );
   }
 
   getErrorForEmail(){

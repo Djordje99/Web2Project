@@ -1,3 +1,52 @@
 <h2>Edit Profile</h2>
 
-<app-register-form [model]="model" (onSaveChanges)="edit($event)"></app-register-form>
+<form (submit)="edit()" [formGroup]="form">
+    <div>
+		<mat-form-field appearance="outline">
+			<mat-label>Username</mat-label>
+			<input formControlName="username" matInput />
+		</mat-form-field>
+        <mat-form-field appearance="outline">
+			<mat-label>Email</mat-label>
+			<input formControlName="email" matInput />
+		</mat-form-field>
+	</div>
+    <div>
+		<mat-form-field appearance="outline">
+			<mat-label>First Name</mat-label>
+			<input formControlName="firstName" matInput />
+		</mat-form-field>
+        <mat-form-field appearance="outline">
+			<mat-label>Last Name</mat-label>
+			<input formControlName="lastName" matInput />
+		</mat-form-field>
+	</div>
+    <div>
+        <mat-form-field appearance="outline">
+			<mat-label>Birthday</mat-label>
+			<input formControlName="birthday" matInput [matDatepicker]="datepicker" />
+			<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+			<mat-datepicker #datepicker></mat-datepicker>
+		</mat-form-field>
+        <mat-form-field appearance="outline">
+			<input formControlName="address" matInput />
+			<mat-label>Address</mat-label>
+
+		</mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-select placeholder="Select User Type" formControlName="userType">
+                <mat-option value="1">Consumer</mat-option>
+                <mat-option value="2">Deliverer</mat-option>
+            </mat-select>
+		</mat-form-field>
+
+		<button type="button" mat-flat-button (click)="imageInput.click()">Select Image</button>
+		<input type="file" hidden #imageInput accept="image/png, image/jpeg, image/jpg" />
+    </div>
+	<div>
+		<button mat-flat-button color="primary" [disabled]="form.invalid">Edit</button>
+		<a mat-stroked-button routerLink="">Cancel</a>
+	</div>
+</form>

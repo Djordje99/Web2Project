@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Token } from '../models/user.model';
+import { EmailDto, LogInClass, Token, UserCreationDto, UserDto } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -11,8 +11,15 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  logIn(email:string, password:string): Observable<Token>{
-    const param = new HttpParams().set('email', email).set('password', password)
-    return this.http.post<Token>(environment.api + '/api/users/login', param);
+  login(user: LogInClass) :Observable<Token>{
+    return this.http.post<Token>(environment.api + '/api/users/login', user);
+  }
+
+  register(user: LogInClass) :Observable<UserCreationDto>{
+    return this.http.post<UserCreationDto>(environment.api + '/api/users/register', user);
+  }
+
+  getUser(email: EmailDto): Observable<UserDto>{
+    return this.http.post<UserDto>(environment.api + '/api/users/find', email);
   }
 }

@@ -21,33 +21,33 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("create-order")]
-        public IActionResult CreateOrder([FromForm] OrderDto newOrder)
+        public IActionResult CreateOrder([FromBody] OrderDto newOrder)
         {
             return Ok(_consumerService.CreateOrder(newOrder));
         }
 
-        [HttpPost("add-product")]
-        public IActionResult AddOrderDetails(long orderId, long productId, int amount)
+        [HttpPost("add-product-details")]
+        public IActionResult AddOrderDetails([FromBody] OrderDetailsDto product)
         {
-            return Ok(_consumerService.AddOrderDetail(orderId, productId, amount));
-        }
-
-        [HttpPost("order")]
-        public IActionResult Order(long orderId)
-        {
-            return Ok(_consumerService.Order(orderId));
+            return Ok(_consumerService.AddProdactOrder(product));
         }
 
         [HttpPost("get-orders")]
-        public IActionResult GetOrders(string email)
+        public IActionResult GetOrders([FromBody] UserEmailDto email)
         {
             return Ok(_consumerService.GetOrders(email));
         }
 
-        [HttpPost("get-orders-details")]
-        public IActionResult GetOrdersDetails(string email)
+        [HttpPost("get-current-orders")]
+        public IActionResult GetCurrentOrders([FromBody] UserEmailDto email)
         {
-            return Ok(_consumerService.GetOrdersDetails(email));
+            return Ok(_consumerService.GetCurrentOrders(email));
+        }
+        
+        [HttpPost("get-orders-details")]
+        public IActionResult GetOrdersDetails([FromBody] UserProductsDto userProducts)
+        {
+            return Ok(_consumerService.GetOrdersDetails(userProducts));
         }
     }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDto, VerifyDto } from 'src/app/models/user.model';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-verification',
@@ -7,21 +9,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerificationComponent implements OnInit {
 
-  index: number = 10;
+  users:UserDto[] = [];
 
-  constructor() { }
-
-  users = [{username: "pera", verified: false}, {username: "laza", verified: false}]
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
+    this.adminService.getVerification().subscribe(data =>{
+      this.users = data;
+    })
   }
 
   accept(index: number){
     console.log(index)
+    let user = this.users[index];
+    let verify:VerifyDto = new VerifyDto();
+    verify.email = user.email;
+    verify.verifyType = 0;
+
+    this.adminService.verifyApprove(verify).subscribe(data => {
+      console.log(data);
+    })
+
+    this.ngOnInit();
   }
 
   decline(index: number){
     console.log(index)
+    let user = this.users[index];
+    let verify:VerifyDto = new VerifyDto();
+    verify.email = user.email;
+    verify.verifyType = 1;
+
+    this.adminService.verifyApprove(verify).subscribe(data => {
+      console.log(data);
+    })
+
+    this.ngOnInit();
   }
 
 }

@@ -9,9 +9,9 @@ namespace Web2Project_FoodDelivery.Enums
     {
         public enum UserType
         {
-            Admin,
-            Consumer,
-            Deliverer,
+            Admin = 0,
+            Consumer = 1,
+            Deliverer = 2,
         }
 
         public enum VeryfiedType
@@ -23,7 +23,6 @@ namespace Web2Project_FoodDelivery.Enums
 
         public enum OrderStatusType
         {
-            Prepering,
             Wating,
             InProgress,
             Delivered,

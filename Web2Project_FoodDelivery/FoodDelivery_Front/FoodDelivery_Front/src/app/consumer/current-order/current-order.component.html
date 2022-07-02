@@ -1,0 +1,18 @@
+<h2>Current Orders</h2>
+
+<div>
+    <ol>
+        <ng-container *ngFor="let order of orders; let i = index">
+            <li>
+                <p>Address: {{order.address}}</p>
+                <p>Comment: {{order.comment}}</p>
+                <p>Status: {{order.status}}</p>
+                <button mat-flat-button color="primary" (click)="getDetails(i)">Details</button>
+            </li>
+        </ng-container>
+    </ol>
+</div>
+
+<ng-container *ngIf="showDetails">
+    <app-order-details [order]="orderToDisplay" [products]="productsToDisplay"></app-order-details>
+</ng-container>

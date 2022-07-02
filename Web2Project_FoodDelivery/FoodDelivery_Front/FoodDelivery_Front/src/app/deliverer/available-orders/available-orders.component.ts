@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { DeliveryDto } from 'src/app/models/delivery.model';
+import { OrderDto } from 'src/app/models/order.model';
+import { ProductDto, UserProductDto } from 'src/app/models/product.model';
+import { OrderDetailsService } from 'src/app/order-details/order-details.service';
+import { SecurityService } from 'src/app/security/security.service';
+import { DelivererService } from '../deliverer.service';
 
 @Component({
   selector: 'app-available-orders',
@@ -7,15 +13,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AvailableOrdersComponent implements OnInit {
 
-  constructor() { }
+  availableOrders: OrderDto[] = []
+
+  orderToDisplay:OrderDto = new OrderDto();
+  productsToDisplay:ProductDto[] = [];
+  showDetails = false;
+
+  constructor(private delivererService: DelivererService, private security:SecurityService, private orderDetailsService: OrderDetailsService) { }
 
   ngOnInit(): void {
+    this.delivererService.availableOrders().subscribe(data =>{
+      this.availableOrders = data;
+    })
   }
-
-  orders = [{address: 'address', comment: 'some comment', price: 422, products: [{name: 'Pizza', price: 99, ingredients: 'tomato, mozzarella, olive oil, basil', amount: 10}, {name: 'Burger', price: 99, ingredients: 'tomato, mozzarella, olive oil, basil', amount: 4}]}]
 
   takeOrder(index:number){
     console.log(index)
+    let delivery = new DeliveryDto();
+    delivery.orderId = this.availableOrders[index].id;
+    delivery.delivererEmail = this.security.getLoggedUser().email;
+
+    this.delivererService.takeDelivery(delivery).subscribe(data =>{
+      console.log(data);
+    })
+  }
+
+  getDetails(index:number){
+    this.orderToDisplay = this.availableOrders[index];
+
+    let userProduct = new UserProductDto();
+    userProduct.email = this.orderToDisplay.creatorEmail;
+    userProduct.orderId = this.orderToDisplay.id;
+
+    this.orderDetailsService.getOrderProducts(userProduct).subscribe( data => {
+      this.productsToDisplay = data;
+    });
+
+    this.showDetails = true;
   }
 
 }

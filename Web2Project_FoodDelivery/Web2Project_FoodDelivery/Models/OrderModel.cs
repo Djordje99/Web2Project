@@ -15,7 +15,6 @@ namespace Web2Project_FoodDelivery.Models
         public UserModel Creator { get; set; }
         public string CreatorEmail { get; set; }
         public DeliveryModel Delivery { get; set; }
-        //public string DelivererEmail { get; set; }
         public List<OrderDetailsModel> OrderDetails { get; set; }
     }
 }

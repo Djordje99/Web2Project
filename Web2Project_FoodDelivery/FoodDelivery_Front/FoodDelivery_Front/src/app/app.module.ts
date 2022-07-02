@@ -14,7 +14,6 @@ import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './home/home.component';
 import { RegisterFormComponent } from './user/register-form/register-form.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
-import { ProfileComponent } from './user/profile/profile.component';
 import { DelivererReviewComponent } from './admin/deliverer-review/deliverer-review.component';
 import { ConsumerReviewComponent } from './admin/consumer-review/consumer-review.component';
 import { CreateOrderComponent } from './consumer/create-order/create-order.component';
@@ -26,6 +25,10 @@ import { ActualOrderComponent } from './deliverer/actual-order/actual-order.comp
 import { AllOrdersComponent } from './admin/all-orders/all-orders.component';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
 import { OrderProductsComponent } from './consumer/order-products/order-products.component';
+import { ProfileComponent } from './user/profile/profile.component';
+import { PickProductsComponent } from './consumer/pick-products/pick-products.component';
+import { CurrentOrderComponent } from './consumer/current-order/current-order.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,6 @@ import { OrderProductsComponent } from './consumer/order-products/order-products
     HomeComponent,
     RegisterFormComponent,
     EditUserComponent,
-    ProfileComponent,
     DelivererReviewComponent,
     ConsumerReviewComponent,
     CreateOrderComponent,
@@ -47,7 +49,11 @@ import { OrderProductsComponent } from './consumer/order-products/order-products
     ActualOrderComponent,
     AllOrdersComponent,
     CreateProductComponent,
-    OrderProductsComponent
+    OrderProductsComponent,
+    ProfileComponent,
+    PickProductsComponent,
+    CurrentOrderComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -36,14 +36,14 @@ namespace Web2Project_FoodDelivery.Services
             return true;
         }
 
-        public bool VerifyDeliverer(string email, Enums.Enums.VeryfiedType status)
+        public bool VerifyDeliverer(VerifyDto delivererVerify)
         {
-            UserModel deliverer = _dbContext.Users.Find(email);
+            UserModel deliverer = _dbContext.Users.Find(delivererVerify.Email);
 
             if (deliverer.Type != Enums.Enums.UserType.Deliverer)
                 return false;
 
-            deliverer.Veryfied = status;
+            deliverer.Veryfied = delivererVerify.VerifyType;
 
             _dbContext.Users.Update(deliverer);
             _dbContext.SaveChanges();
@@ -60,7 +60,7 @@ namespace Web2Project_FoodDelivery.Services
             foreach (var item in user)
             {
                 UserDto userDto = _mapper.Map<UserDto>(item);
-                if (userDto.Type == Enums.Enums.UserType.Deliverer)
+                if (userDto.Type == Enums.Enums.UserType.Deliverer && userDto.Veryfied != Enums.Enums.VeryfiedType.Approved)
                     userResult.Add(userDto);
             }
 

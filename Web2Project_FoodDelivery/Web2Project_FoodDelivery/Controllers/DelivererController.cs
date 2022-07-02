@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web2Project_FoodDelivery.DTO;
 using Web2Project_FoodDelivery.Interfaces;
 
 namespace Web2Project_FoodDelivery.Controllers
@@ -20,9 +21,9 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("take-order")]
-        public IActionResult TakeOrder(long orderId, string delivererEmail)
+        public IActionResult TakeOrder([FromBody] DeliveryDto delivery)
         {
-            return Ok(_delivererService.TakeOrder(orderId, delivererEmail));
+            return Ok(_delivererService.TakeOrder(delivery));
         }
 
         [HttpGet("available-orders")]
@@ -32,13 +33,19 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("delivered-orders")]
-        public IActionResult GetDeliveredOrders(string email)
+        public IActionResult GetDeliveredOrders([FromBody] UserEmailDto email)
         {
             return Ok(_delivererService.GetDeliveredOrders(email));
         }
 
+        [HttpPost("actual-orders")]
+        public IActionResult GetActualOrders([FromBody] UserEmailDto email)
+        {
+            return Ok(_delivererService.GetActualOrders(email));
+        }
+
         [HttpGet("orders-details")]
-        public IActionResult GetOrderDetails(string email)
+        public IActionResult GetOrderDetails([FromBody] UserEmailDto email)
         {
             return Ok(_delivererService.GetOrdersDetails(email));
         }

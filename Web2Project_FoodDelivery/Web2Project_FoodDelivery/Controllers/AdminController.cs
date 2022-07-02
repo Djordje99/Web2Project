@@ -27,9 +27,9 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("verify")]
-        public IActionResult VerifyDeliverer(string email, Enums.Enums.VeryfiedType status)
+        public IActionResult VerifyDeliverer([FromBody] VerifyDto delivererVerify)
         {
-            return Ok(_adminService.VerifyDeliverer(email, status));
+            return Ok(_adminService.VerifyDeliverer(delivererVerify));
         }
 
         [HttpGet("deliverers-status")]

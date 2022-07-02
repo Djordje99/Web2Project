@@ -38,10 +38,10 @@ namespace Web2Project_FoodDelivery.Services
             return orederResult;
         }
 
-        public int TakeOrder(long orderId, string delivererEmail)
+        public int TakeOrder(DeliveryDto delivery)
         {
-            var order = _dbContext.Orders.Find(orderId);
-            var user = _dbContext.Users.Find(delivererEmail);
+            var order = _dbContext.Orders.Find(delivery.OrderId);
+            var user = _dbContext.Users.Find(delivery.DelivererEmail);
 
             if (order == null || order.Status != Enums.Enums.OrderStatusType.Wating || (user.Type == Enums.Enums.UserType.Deliverer &&
                 (user.Veryfied == Enums.Enums.VeryfiedType.Denied || user.Veryfied == Enums.Enums.VeryfiedType.InProgress)))
@@ -50,35 +50,51 @@ namespace Web2Project_FoodDelivery.Services
             order.Status = Enums.Enums.OrderStatusType.InProgress;
             _dbContext.Orders.Update(order);
 
-            DeliveryDto delivery = new DeliveryDto
-            {
-                DelivererEmail = delivererEmail,
-                OrderId = orderId
-            };
-
             _dbContext.Deliveries.Add(_mapper.Map<DeliveryModel>(delivery));
             _dbContext.SaveChanges();
 
             return new Random().Next(1, 40); 
         }
 
-        public List<OrderDto> GetDeliveredOrders(string email)
+        public List<OrderDto> GetDeliveredOrders(UserEmailDto email)
         {
-            List<OrderDto> orders = new List<OrderDto>();
+            List<OrderDto> ordersDto = new List<OrderDto>();
 
-            var deliverisModel = _dbContext.Deliveries.Where(x => x.DelivererEmail == email).ToList();
+            var deliverisModel = _dbContext.Deliveries.Where(x => x.DelivererEmail == email.Email).ToList();
 
             foreach (var item in deliverisModel)
             {
-                var order = _dbContext.Orders.Where(x => x.Id == item.OrderId && x.Status == Enums.Enums.OrderStatusType.Delivered);
+                var orders = _dbContext.Orders.Where(x => x.Id == item.OrderId && x.Status == Enums.Enums.OrderStatusType.Delivered).ToList();
 
-                orders.Add(_mapper.Map<OrderDto>(order));
+                foreach (var orderModel in orders)
+                {
+                    ordersDto.Add(_mapper.Map<OrderDto>(orderModel));
+                }
             }
 
-            return orders;
+            return ordersDto;
         }
 
-        public List<OrderDetailsDto> GetOrdersDetails(string email)
+        public List<OrderDto> GetActualOrders(UserEmailDto email)
+        {
+            List<OrderDto> ordersDto = new List<OrderDto>();
+
+            var deliverisModel = _dbContext.Deliveries.Where(x => x.DelivererEmail == email.Email).ToList();
+
+            foreach (var item in deliverisModel)
+            {
+                var orders = _dbContext.Orders.Where(x => x.Id == item.OrderId && x.Status == Enums.Enums.OrderStatusType.InProgress).ToList();
+
+                foreach (var orderModel in orders)
+                {
+                    ordersDto.Add(_mapper.Map<OrderDto>(orderModel));
+                }
+            }
+
+            return ordersDto;
+        }
+
+        public List<OrderDetailsDto> GetOrdersDetails(UserEmailDto email)
         {
             var orders = GetDeliveredOrders(email);
 

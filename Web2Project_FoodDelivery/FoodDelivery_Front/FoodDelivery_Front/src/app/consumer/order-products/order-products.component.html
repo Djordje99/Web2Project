@@ -1,7 +1,6 @@
 <h2>Order Products</h2>
-
 <div>
-    <form [formGroup]="form">
+    <form [formGroup]="formOrder">
         <div>
             <mat-form-field appearance="outline">
                 <mat-label>Address</mat-label>
@@ -19,22 +18,27 @@
                 <mat-label>Price</mat-label>
                 <input readonly formControlName="price" matInput/>
             </mat-form-field>
-        </div>
-        <div>
-            <ol>
-                <ng-container *ngFor="let product of products; let i = index">
-                    <li>
-                        <h3>{{product.name}}</h3>
-                        <p>Price: {{product.price}}</p>
-                        <p>Ingredients: {{product.ingredients}}</p>
-                        <p>Amount: {{product.amount}}</p>
-                        <button mat-flat-button color="warn" (click)="removeFromCart(i)">Remove</button>
-                    </li>
-                </ng-container>
-            </ol>
-        </div>
-        <div>
-            <button mat-flat-button color="primary" (click)="order()" [disabled]="form.invalid">Order</button>
+            <button mat-flat-button color="primary" routerLink="/consumer/pick-products">Products</button>
         </div>
     </form>
+</div>
+<div>
+    <ng-container>
+        <div *ngFor="let product of productToOrder; let index = index" class="product-container">
+            <div>
+                <p>{{product.name}}</p>
+                <p>{{product.price}}</p>
+                <p>{{product.ingredients}}</p>
+                <p>{{product.amount}}</p>
+            </div>
+            <div>
+                <a mat-flat-button color="warn" (click)="remove(index)">
+                    Remove
+                </a>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<div>
+    <button mat-flat-button color="primary" (click)="order()" [disabled]="formOrder.invalid">Order</button>
 </div>

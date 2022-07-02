@@ -8,9 +8,10 @@ namespace Web2Project_FoodDelivery.Interfaces
 {
     public interface IDelivererService
     {
-        int TakeOrder(long orderId, string delivererEmail);
+        int TakeOrder(DeliveryDto delivery);
         List<OrderDto> SeeAvailableOrders();
-        List<OrderDto> GetDeliveredOrders(string email);
-        List<OrderDetailsDto> GetOrdersDetails(string email);
+        List<OrderDto> GetDeliveredOrders(UserEmailDto email);
+        List<OrderDto> GetActualOrders(UserEmailDto email);
+        List<OrderDetailsDto> GetOrdersDetails(UserEmailDto email);
     }
 }

@@ -5,19 +5,14 @@
         <ng-container *ngFor="let order of orders; let i = index">
             <li>
                 <p>Address: {{order.address}}</p>
-                <p>Price: {{order.price}}</p>
                 <p>Comment: {{order.comment}}</p>
-                <ol>
-                    <ng-container *ngFor="let product of order.products; let i=index">
-                        <li>
-                            <h3>{{product.name}}</h3>
-                            <p>Price: {{product.price}}</p>
-                            <p>Ingredients: {{product.ingredients}}</p>
-                            <p>Amount: {{product.amount}}</p>
-                        </li>
-                    </ng-container>
-                </ol>
+                <p>Status: {{order.status}}</p>
+                <button mat-flat-button color="primary" (click)="getDetails(i)">Details</button>
             </li>
         </ng-container>
     </ol>
 </div>
+
+<ng-container *ngIf="showDetails">
+    <app-order-details [order]="orderToDisplay" [products]="productsToDisplay"></app-order-details>
+</ng-container>

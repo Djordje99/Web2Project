@@ -13,6 +13,7 @@ using Web2Project_FoodDelivery.DTO;
 using Web2Project_FoodDelivery.Infrastructure;
 using Web2Project_FoodDelivery.Interfaces;
 using Web2Project_FoodDelivery.Models;
+using static Web2Project_FoodDelivery.Enums.Enums;
 
 namespace Web2Project_FoodDelivery.Services
 {
@@ -29,37 +30,46 @@ namespace Web2Project_FoodDelivery.Services
             _secretKey = config.GetSection("SecretKey");
         }
 
-        public string Login(string email, string password)
+        public TokenDto Login(LogInUserDto userToLog)
         {
             UserModel user = null;
-            user = _dbContext.Users.Find(email);
+            user = _dbContext.Users.Find(userToLog.Email);
             List<Claim> claims = new List<Claim>();
 
-            if(user == null || user.AccepredRegistration == false)
+            if(user == null || user.Veryfied == VeryfiedType.Denied || user.Veryfied == VeryfiedType.InProgress)
                 return null;
 
-            if (BCrypt.Net.BCrypt.Verify(password, user.Password, false, BCrypt.Net.HashType.SHA256))
+            if (BCrypt.Net.BCrypt.Verify(userToLog.Password, user.Password, false, BCrypt.Net.HashType.SHA256))
             {
                 if (user.Type == Enums.Enums.UserType.Consumer)
-                    claims.Add(new Claim(ClaimTypes.Role, "Consumer"));
+                {
+                    claims.Add(new Claim("role", "Consumer"));
+                }
                 else if (user.Type == Enums.Enums.UserType.Deliverer)
-                    claims.Add(new Claim(ClaimTypes.Role, "Deliverer"));
+                {
+                    claims.Add(new Claim("role", "Deliverer"));
+                }
                 else if (user.Type == Enums.Enums.UserType.Admin)
-                    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                {
+                    claims.Add(new Claim("role", "Admin"));
+                }
+
+                claims.Add(new Claim("email", user.Email));
 
 
                 SymmetricSecurityKey secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey.Value));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:44398", //url servera koji je izdao token
-                    claims: claims, //claimovi
-                    expires: DateTime.Now.AddMinutes(20), //vazenje tokena u minutama
-                    signingCredentials: signinCredentials, //kredencijali za potpis
-                    audience: email
+                    issuer: "https://localhost:44323/",
+                    claims: claims,
+                    expires: DateTime.Now.AddMinutes(20),
+                    signingCredentials: signinCredentials
                     );
 
                 string tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return tokenString;
+                TokenDto token = new TokenDto { Token = tokenString };
+                
+                return token;
             }
             else
             {
@@ -67,31 +77,37 @@ namespace Web2Project_FoodDelivery.Services
             }
         }
 
-        public UserDto Register(string firstName, string lastName,
-                                      string email, string password,
-                                      string passwordVerify, string username,
-                                      DateTime birthday, string address,
-                                      string photo, Enums.Enums.UserType userType)
+        public UserDto Register(RegisterUserDto userToRegister)
         {
 
-            UserModel userModel = _dbContext.Users.Find(email);
+            UserModel userModel = _dbContext.Users.Find(userToRegister.Email);
+            UserType ut = UserType.Consumer;
+            var veryfied = VeryfiedType.Approved;
+            if (userToRegister.UserType == 2)
+            {
+                ut = UserType.Deliverer;
+                veryfied = VeryfiedType.InProgress;
 
-            if(userModel != null || password != passwordVerify || userType == Enums.Enums.UserType.Admin)
+            }
+            else if (userToRegister.UserType == 0)
+                ut = UserType.Admin;
+
+            if (userModel != null || userToRegister.Password != userToRegister.PasswordVerify)
                 return null;
 
             UserDto user = new UserDto
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Password = BCrypt.Net.BCrypt.HashPassword(password),
-                Username = username,
-                Address = address,
-                Birthday = birthday,
-                Picture = photo,
-                Veryfied = Enums.Enums.VeryfiedType.InProgress,
+                FirstName = userToRegister.FirstName,
+                LastName = userToRegister.LastName,
+                Email = userToRegister.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(userToRegister.Password),
+                Username = userToRegister.Username,
+                Address = userToRegister.Address,
+                Birthday = userToRegister.Birthday,
+                Picture = userToRegister.Photo,
+                Veryfied = veryfied,
                 AccepredRegistration = false,
-                Type = userType
+                Type = ut
             };
 
             userModel = _mapper.Map<UserModel>(user);
@@ -99,7 +115,7 @@ namespace Web2Project_FoodDelivery.Services
             _dbContext.Users.Add(userModel);
             _dbContext.SaveChanges();
 
-            return FindById(user.Email);
+            return user;
         }
 
         public List<UserDto> RetrieveUsers()
@@ -137,11 +153,11 @@ namespace Web2Project_FoodDelivery.Services
             return true;
         }
 
-        public UserDto FindById(string email)
+        public UserDto FindById(UserEmailDto email)
         {
-            var user = _dbContext.Users.Find(email);
+            var userDb = _dbContext.Users.Find(email.Email);
 
-            return _mapper.Map<UserDto>(user);
+            return _mapper.Map<UserDto>(userDb);
         }
     }
 }

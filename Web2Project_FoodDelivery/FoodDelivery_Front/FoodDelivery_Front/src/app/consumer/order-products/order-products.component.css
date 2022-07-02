@@ -1,0 +1,31 @@
+.table-index{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.table-index a{
+    margin-right: 1rem;
+}
+
+.product-container{
+    margin-right: 2%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.product-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+p {
+    max-width: 230px;
+    height: 44px;
+    font-size: 15px;
+}
+
+button {
+    margin-left: 1em;
+}

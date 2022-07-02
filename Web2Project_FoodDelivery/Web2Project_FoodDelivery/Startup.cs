@@ -92,11 +92,11 @@ namespace Web2Project_FoodDelivery
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: _cors, builder => {
-                    builder.WithOrigins("https://localhost:4200")//Ovde navodimo koje sve aplikacije smeju kontaktirati nasu,u ovom slucaju nas Angular front
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
                            .AllowAnyHeader()
-                           .AllowAnyMethod()
-                           .AllowCredentials();
+                           .AllowAnyMethod();
                 });
             });
 
@@ -132,9 +132,11 @@ namespace Web2Project_FoodDelivery
             }
 
             app.UseHttpsRedirection();
+            app.UseCors();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
