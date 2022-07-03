@@ -45,7 +45,7 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("create-product")]
-        public IActionResult CreateProduct([FromForm] ProductDto newProduct)
+        public IActionResult CreateProduct([FromBody] ProductDto newProduct)
         {
             return Ok(_adminService.CreateProduct(newProduct));
         }

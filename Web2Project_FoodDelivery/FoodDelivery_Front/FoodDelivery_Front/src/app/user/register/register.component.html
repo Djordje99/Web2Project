@@ -66,13 +66,14 @@
                     </mat-form-field>
 
                     <button class="field" type="button" mat-flat-button color="primary" (click)="imageInput.click()">Select Image</button>
-                    <input type="file" hidden #imageInput accept="image/png, image/jpeg, image/jpg" />
+                    <input type="file" hidden #imageInput accept="image/png, image/jpeg, image/jpg" (change)="pickImage($event)" />
                 </div>
                 <div>
                     <button mat-flat-button color="primary" [disabled]="form.invalid">Register</button>
                     <a mat-stroked-button routerLink="">Cancel</a>
                 </div>
             </form>
+            <asl-google-signin-button></asl-google-signin-button>
         </mat-card-content>
     </mat-card>
 </div>

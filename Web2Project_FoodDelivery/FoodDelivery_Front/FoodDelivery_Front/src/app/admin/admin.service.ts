@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ProductDto } from '../models/product.model';
 import { EmailDto, UserDto, VerifyDto } from '../models/user.model';
 
 @Injectable({
@@ -29,5 +30,9 @@ export class AdminService {
 
   activateUser(email:EmailDto):Observable<boolean>{
     return this.http.post<boolean>(environment.api + '/api/admin/activate', email)
+  }
+
+  createProduct(newProduct:ProductDto): Observable<ProductDto>{
+    return this.http.post<ProductDto>(environment.api + '/api/admin/create-product', newProduct);
   }
 }

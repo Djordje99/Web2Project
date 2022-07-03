@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ProductDto } from 'src/app/models/product.model';
 import { ConsumerService } from '../consumer.service';
 
@@ -12,7 +12,7 @@ export class PickProductsComponent implements OnInit {
 
   products:ProductDto[] = [];
 
-  constructor(private consumerService: ConsumerService, private formBuilder: FormBuilder) { }
+  constructor(private consumerService: ConsumerService, private formBuilder: UntypedFormBuilder) { }
 
   form = this.formBuilder.group({
     amount: ['', {

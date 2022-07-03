@@ -1,9 +1,33 @@
-<h2>Current User</h2>
-
-<div>
-    <p>First Name: {{user[0].firstName}} Last Name: {{user[0].lastName}}</p>
-    <p>Email: {{user[0].email}} Username: {{user[0].username}}</p>
-    <p>Address: {{user[0].address}} Birthday: {{user[0].birthday}}</p>
-    <p>User Type: {{user[0].userType}} Verified: {{user[0].verified}}</p>
-    <button mat-flat-button color="primary" routerLink="/user/edit/1">Edit</button>
+<div class="main-div">
+    <mat-card style="text-align: center;">
+        <mat-card-title>
+            <h2>Current User</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <div *ngIf="show">
+                <div>
+                    <p class="stylename">{{user.firstName}}  {{user.lastName}}</p>
+                </div>
+                <div>
+                    <p class="stylename">{{user.email}}</p>
+                </div>
+                <div>
+                    <p class="stylename">{{user.username}}</p>
+                </div>
+                <div>
+                    <p class="stylename">{{user.address}}</p>
+                </div>
+                <div>
+                    <p class="stylename">{{user.birthday | date}}</p>
+                </div>
+                <div>
+                    <p class="stylename">{{userType}}  {{verify}}</p>
+                </div>
+                <div>
+                    <img [src]="picture"/>
+                </div>
+                <button mat-flat-button color="primary" routerLink="/user/edit/1">Edit</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

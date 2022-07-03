@@ -1,44 +1,58 @@
-<h2>Order Products</h2>
-<div>
-    <form [formGroup]="formOrder">
-        <div>
-            <mat-form-field appearance="outline">
-                <mat-label>Address</mat-label>
-                <input formControlName="address" matInput />
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field appearance="outline">
-                <mat-label>Comment</mat-label>
-                <input formControlName="comment" matInput/>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field appearance="outline">
-                <mat-label>Price</mat-label>
-                <input readonly formControlName="price" matInput/>
-            </mat-form-field>
-            <button mat-flat-button color="primary" routerLink="/consumer/pick-products">Products</button>
-        </div>
-    </form>
-</div>
-<div>
-    <ng-container>
-        <div *ngFor="let product of productToOrder; let index = index" class="product-container">
+<div class="main-div">
+    <mat-card style="text-align: center;" class="mat-size">
+        <mat-card-title>
+            <h2>Create Order</h2>
+        </mat-card-title>
+
+        <mat-card-content>
             <div>
-                <p>{{product.name}}</p>
-                <p>{{product.price}}</p>
-                <p>{{product.ingredients}}</p>
-                <p>{{product.amount}}</p>
+                <form [formGroup]="formOrder">
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Address</mat-label>
+                            <input formControlName="address" matInput />
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Comment</mat-label>
+                            <input formControlName="comment" matInput/>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Price</mat-label>
+                            <input readonly formControlName="price" matInput/>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button mat-flat-button color="primary" routerLink="/consumer/pick-products">Add Products</button>
+                    </div>
+                </form>
+            </div>
+            <div class="left-div">
+                <div *ngFor="let product of productToOrder; let index = index" >
+                    <mat-card style="text-align: center;">
+                     <mat-card-content>
+                         <div>
+                             <p class="stylename">{{product.name}}</p>
+                             <p class="stylename">{{product.price | currency:'RSD'}}</p>
+                             <p class="stylename">{{product.ingredients}}</p>
+                             <p class="stylename">{{product.amount}}</p>
+                         </div>
+                         <div>
+                             <a mat-flat-button color="warn" (click)="remove(index)">
+                                 Remove
+                             </a>
+                         </div>
+                     </mat-card-content>
+                    </mat-card>
+                 </div>
             </div>
             <div>
-                <a mat-flat-button color="warn" (click)="remove(index)">
-                    Remove
-                </a>
+                <button mat-flat-button color="primary" (click)="order()" [disabled]="formOrder.invalid">Order</button>
             </div>
-        </div>
-    </ng-container>
-</div>
-<div>
-    <button mat-flat-button color="primary" (click)="order()" [disabled]="formOrder.invalid">Order</button>
+        </mat-card-content>
+
+    </mat-card>
 </div>

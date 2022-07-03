@@ -17,11 +17,33 @@ p {
     font-size: 15px;
 }
 
-image {
-    width: 230px;
-    height: 300px;
-}
-
 button {
     margin-left: 1em;
+}
+
+.stylename {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 22px;
+    font-weight: bold;
+    font-variant: small-caps;
+    color: #006;
+   }
+
+.left-div{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+}
+
+.content{
+    height: 350x;
+    width: 300px;
+    margin: 20px;
+}
+
+
+.mat-size{
+    height: 80%;
+    width: 80%;
 }

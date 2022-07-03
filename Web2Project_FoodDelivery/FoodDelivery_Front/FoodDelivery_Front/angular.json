@@ -105,5 +105,7 @@
       }
     }
   },
-  "defaultProject": "FoodDelivery_Front"
+  "cli": {
+    "analytics": false
+  }
 }

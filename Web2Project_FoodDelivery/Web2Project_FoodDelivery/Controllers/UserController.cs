@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web2Project_FoodDelivery.Interfaces;
 using Web2Project_FoodDelivery.DTO;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace Web2Project_FoodDelivery.Controllers
 {
@@ -62,6 +65,58 @@ namespace Web2Project_FoodDelivery.Controllers
         public IActionResult DeleteUser(string email)
         {
             return Ok(_consumerService.DeleteUser(email));
+        }
+
+        [HttpPost("upload"), DisableRequestSizeLimit]
+        public IActionResult Upload()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    if (_consumerService.AddUsersPicture(file.Name, dbPath))
+                        return Ok(new { dbPath });
+                    else
+                        return BadRequest();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + "No image attached");
+            }
+        }
+
+        [HttpPost("download")]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 0)]
+        public IActionResult Download(UserEmailDto email)
+        {
+            string imagePath = _consumerService.GetUsersPicture(email.Email);
+            if (imagePath == string.Empty)
+            {
+                return StatusCode(409, "User does not exist.");
+            }
+
+            if (imagePath == null)
+            {
+                return NoContent();
+            }
+
+            var file = Path.Combine(Directory.GetCurrentDirectory(), imagePath);
+            return PhysicalFile(file, "image/png");
         }
     }
 }

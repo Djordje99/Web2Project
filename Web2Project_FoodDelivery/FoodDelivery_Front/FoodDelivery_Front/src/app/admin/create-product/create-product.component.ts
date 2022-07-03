@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { ProductDto } from 'src/app/models/product.model';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-create-product',
@@ -8,7 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class CreateProductComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: UntypedFormBuilder, private adminService: AdminService) { }
 
   form = this.formBuilder.group({
     name: ['', {
@@ -26,9 +28,17 @@ export class CreateProductComponent implements OnInit {
   }
 
   createProduct(){
-    console.log(this.form.controls['name'].value)
-    console.log(this.form.controls['price'].value)
-    console.log(this.form.controls['ingredients'].value)
-  }
+    const product = new ProductDto;
+    product.name = this.form.controls['name'].value;
+    product.price = this.form.controls['price'].value
+    product.ingredients = this.form.controls['ingredients'].value
 
+    console.log(product)
+
+    this.adminService.createProduct(product).subscribe( data => {
+      console.log(data);
+    })
+
+    this.form.reset();
+  }
 }

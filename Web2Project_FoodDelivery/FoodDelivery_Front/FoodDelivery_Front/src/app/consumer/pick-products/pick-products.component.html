@@ -1,24 +1,36 @@
-<h2>Products</h2>
-<ng-container>
-    <div *ngFor="let product of products; let index = index" class="product-container">
-        <div>
-            <p>{{product.name}}</p>
-            <p>{{product.price}}</p>
-            <p>{{product.ingredients}}</p>
-            <form [formGroup]="form" (submit)="addToCart(index)">
-                <div>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Amount</mat-label>
-                        <input formControlName="amount" matInput type="number"/>
-                    </mat-form-field>
+<div class="main-div">
+    <mat-card class="mat-size"style="text-align: center;">
+        <mat-card-title>
+            <h2>Products</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <div class="left-div">
+                <div *ngFor="let product of products; let index = index" class="product-container">
+                    <mat-card style="text-align: center;">
+                        <mat-card-content>
+                            <div>
+                                <p class="stylename">{{product.name}}</p>
+                                <p class="stylename">{{product.price | currency:'RSD'}}</p>
+                                <p class="stylename">{{product.ingredients}}</p>
+                                <form [formGroup]="form" (submit)="addToCart(index)">
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Amount</mat-label>
+                                            <input formControlName="amount" matInput type="number"/>
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <button mat-flat-button color="primary" [disabled]="form.invalid">
+                                            Add
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
-                <div>
-                    <button mat-flat-button color="primary" [disabled]="form.invalid">
-                        Add
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <button mat-flat-button routerLink="/consumer/order-products">Order</button>
-</ng-container>
+            </div>
+            <button mat-flat-button color="primary" routerLink="/consumer/order-products">Order</button>
+        </mat-card-content>
+    </mat-card>
+</div>

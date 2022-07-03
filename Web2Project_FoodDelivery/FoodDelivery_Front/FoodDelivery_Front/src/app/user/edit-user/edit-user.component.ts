@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -14,9 +14,9 @@ import { UserService } from '../user.service';
 export class EditUserComponent implements OnInit {
 
   model:UserDto = new UserDto;
-  form:FormGroup;
+  form:UntypedFormGroup;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private security: SecurityService, private toastr: ToastrService, private formBuilder: FormBuilder)
+  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private security: SecurityService, private toastr: ToastrService, private formBuilder: UntypedFormBuilder)
   {
   }
 

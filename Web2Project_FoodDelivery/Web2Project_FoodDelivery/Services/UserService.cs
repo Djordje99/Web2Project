@@ -163,5 +163,27 @@ namespace Web2Project_FoodDelivery.Services
 
             return _mapper.Map<UserDto>(userDb);
         }
+
+        public bool AddUsersPicture(string email, string path)
+        {
+            UserModel user = _dbContext.Users.Find(email);
+
+            if (user == null)
+                return false;
+
+            user.Picture = path;
+            _dbContext.SaveChanges();
+            return true;
+        }
+
+        public string GetUsersPicture(string email)
+        {
+            UserModel user = _dbContext.Users.Find(email);
+
+            if (user == null)
+                return string.Empty;
+            else
+                return user.Picture;
+        }
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { OrderDto } from 'src/app/models/order.model';
 import { OrderProductDto, ProductDto } from 'src/app/models/product.model';
 import { SecurityService } from 'src/app/security/security.service';
@@ -14,9 +14,9 @@ export class OrderProductsComponent implements OnInit {
 
   productToOrder:ProductDto[];
   price:number;
-  formOrder:FormGroup;
+  formOrder:UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder, public consumerService: ConsumerService, private security:SecurityService) { }
+  constructor(private formBuilder: UntypedFormBuilder, public consumerService: ConsumerService, private security:SecurityService) { }
 
   ngOnInit(): void {
     this.productToOrder = this.consumerService.pickedProducts;
@@ -61,6 +61,9 @@ export class OrderProductsComponent implements OnInit {
         });
       }
     });
+
+    this.formOrder.reset();
+    this.productToOrder = [];
   }
 
   remove(index:number){

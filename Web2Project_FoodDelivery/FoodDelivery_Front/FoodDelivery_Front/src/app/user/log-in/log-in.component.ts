@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { GoogleApiService } from 'src/app/google-api.service';
 import { LogInClass, Token } from 'src/app/models/user.model';
 import { UserService } from '../user.service';
 
@@ -13,7 +12,10 @@ import { UserService } from '../user.service';
 })
 export class LogInComponent implements OnInit {
 
-  constructor(public googleApi: GoogleApiService, private formBuilder: FormBuilder, private userService: UserService, private router: Router, private toastr: ToastrService) {}
+  socialUser;
+
+  constructor(private formBuilder: UntypedFormBuilder, private userService: UserService, private router: Router, private toastr: ToastrService) {
+  }
 
   form = this.formBuilder.group({
     email: ['', {
@@ -24,7 +26,8 @@ export class LogInComponent implements OnInit {
     }]
   });
 
-  ngOnInit(): void {}
+  ngOnInit(){
+  }
 
   logIn(){
     let user:LogInClass = new LogInClass();
@@ -65,5 +68,4 @@ export class LogInComponent implements OnInit {
 
     return '';
   }
-
 }

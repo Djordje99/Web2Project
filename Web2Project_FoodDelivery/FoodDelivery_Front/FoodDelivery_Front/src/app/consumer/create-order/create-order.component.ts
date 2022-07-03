@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ProductDto } from 'src/app/models/product.model';
 import { ConsumerService } from '../consumer.service';
 import { OrderProductsComponent } from '../order-products/order-products.component';
@@ -14,7 +14,7 @@ export class CreateOrderComponent implements OnInit {
   products:ProductDto[];
   columnToDisplay = ['name', 'price', 'ingredients', 'amount', 'action']
 
-  constructor(private formBuilder: FormBuilder, private consumerService: ConsumerService)
+  constructor(private formBuilder: UntypedFormBuilder, private consumerService: ConsumerService)
   {
     let productsData;
     this.consumerService.getProductsAll().subscribe(data =>{

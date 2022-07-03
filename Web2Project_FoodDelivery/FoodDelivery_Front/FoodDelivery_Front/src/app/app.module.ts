@@ -29,6 +29,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { ActivationComponent } from './admin/activation/activation.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
+import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@abacritt/angularx-social-login'
+
 
 @NgModule({
   declarations: [
@@ -62,8 +64,22 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     HttpClientModule,
     ToastrModule.forRoot(),
     OAuthModule.forRoot(),
+    SocialLoginModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('395905983761-v6hsgsuu4khnbcp6aapqnmtq0sa2a5a5.apps.googleusercontent.com')
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

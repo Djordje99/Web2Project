@@ -22,4 +22,12 @@ export class UserService {
   getUser(email: EmailDto): Observable<UserDto>{
     return this.http.post<UserDto>(environment.api + '/api/users/find', email);
   }
+
+  upload(formData: FormData){
+    return this.http.post<FormData>(environment.api + '/api/users/upload', formData);
+  }
+
+  download(email:EmailDto) : Observable<Blob>{
+    return this.http.post(environment.api + '/api/users/download ', email, { responseType: 'blob' });
+  }
 }

@@ -14,5 +14,7 @@ namespace Web2Project_FoodDelivery.Interfaces
         bool DeleteUser(string email);
         List<UserDto> RetrieveUsers();
         UserDto FindById(UserEmailDto email);
+        bool AddUsersPicture(string email, string path);
+        string GetUsersPicture(string email);
     }
 }

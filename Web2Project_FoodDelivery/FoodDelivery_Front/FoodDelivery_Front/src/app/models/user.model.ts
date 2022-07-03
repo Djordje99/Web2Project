@@ -33,7 +33,7 @@ export class UserDto{
     birthday: Date = new Date();
     address: string = '';
     userType: number = 0;
-    photo: string = '';
+    picture: string = '';
     verified: number = 0;
     accepredRegistration: boolean = false;
 }

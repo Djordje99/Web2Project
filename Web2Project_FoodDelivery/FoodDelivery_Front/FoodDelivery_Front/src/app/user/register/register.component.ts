@@ -1,5 +1,6 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserCreationDto } from 'src/app/models/user.model';
@@ -12,9 +13,23 @@ import { UserService } from '../user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private toastr: ToastrService, private formBuilder: FormBuilder) { }
+  socialUser;
+  file:File;
+
+  constructor(private socialAuthService: SocialAuthService, private userService: UserService, private router: Router, private toastr: ToastrService, private formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
+    console.log("ovde")
+    this.socialAuthService.authState.subscribe((user) => {
+      this.socialUser = user;
+      if (this.socialUser != null){
+        this.form.patchValue({
+          firstName: this.socialUser.firstName,
+          lastName: this.socialUser.lastName,
+          email: this.socialUser.email
+        })
+      }
+    });
   }
 
   form = this.formBuilder.group({
@@ -44,9 +59,9 @@ export class RegisterComponent implements OnInit {
     }],
     userType: ['', {
       validators: [Validators.required]
-    }],
-    photo: ['']
+    }]
   });
+
 
   getError(fieldName:string){
     const field = this.form.get(fieldName);
@@ -65,11 +80,28 @@ export class RegisterComponent implements OnInit {
   register(){
     this.userService.register(this.form.value).subscribe(
       (data : UserCreationDto) => {
+        if (this.file != null) {
+          this.uploadFile(data.email);
+        }
         this.router.navigateByUrl('/user/login');
       },
       error => {
           this.toastr.error('User already exists.', 'Authentication failed.');
       }
     );
+  }
+
+  pickImage(event){
+    this.file = event.target.files[0];
+    console.log(this.file.name)
+  }
+
+  uploadFile(email:string){
+    const formData = new FormData();
+    formData.append(email, this.file, this.file.name);
+
+    this.userService.upload(formData).subscribe(data => {
+        console.log("Image uploaded");
+    });
   }
 }
