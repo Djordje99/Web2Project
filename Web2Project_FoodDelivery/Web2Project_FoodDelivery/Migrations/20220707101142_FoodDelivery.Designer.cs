@@ -10,7 +10,7 @@ using Web2Project_FoodDelivery.Infrastructure;
 namespace Web2Project_FoodDelivery.Migrations
 {
     [DbContext(typeof(FoodDeliveryDbContext))]
-    [Migration("20220525201126_FoodDelivery")]
+    [Migration("20220707101142_FoodDelivery")]
     partial class FoodDelivery
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,8 +93,14 @@ namespace Web2Project_FoodDelivery.Migrations
                     b.Property<string>("CreatorEmail")
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<long>("TakenTime")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

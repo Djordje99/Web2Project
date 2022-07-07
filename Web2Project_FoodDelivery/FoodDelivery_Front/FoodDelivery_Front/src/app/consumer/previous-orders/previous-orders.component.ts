@@ -19,8 +19,6 @@ export class PreviousOrdersComponent implements OnInit {
   orderToDisplay:OrderDto = new OrderDto();
   productsToDisplay:ProductDto[] = [];
 
-  showDetails = false
-
   ngOnInit(): void {
     this.consumerService.previousOrders(this.security.getLoggedUser()).subscribe(data =>{
       this.orders = data;
@@ -37,8 +35,5 @@ export class PreviousOrdersComponent implements OnInit {
     this.orderDetailsService.getOrderProducts(userProduct).subscribe( data => {
       this.productsToDisplay = data;
     });
-
-    this.showDetails = true;
   }
-
 }

@@ -28,4 +28,8 @@ export class DelivererService {
   takeDelivery(delivery:DeliveryDto): Observable<number>{
     return this.http.post<number>(environment.api + '/api/deliverer/take-order', delivery);
   }
+
+  deliver(delivery:DeliveryDto):Observable<boolean>{
+    return this.http.post<boolean>(environment.api + '/api/deliverer/deliver', delivery);
+  }
 }

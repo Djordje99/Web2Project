@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { EmailDto, UserCreationDto, UserDto } from 'src/app/models/user.model';
@@ -16,7 +16,12 @@ export class EditUserComponent implements OnInit {
   model:UserDto = new UserDto;
   form:UntypedFormGroup;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private security: SecurityService, private toastr: ToastrService, private formBuilder: UntypedFormBuilder)
+  constructor(private activatedRoute: ActivatedRoute,
+              private userService: UserService,
+              private security: SecurityService,
+              private toastr: ToastrService,
+              private formBuilder: UntypedFormBuilder,
+              private router: Router)
   {
   }
 
@@ -45,9 +50,6 @@ export class EditUserComponent implements OnInit {
         address: [this.model?.address, {
           validators: [Validators.required]
         }],
-        userType: [this.model?.userType, {
-          validators: [Validators.required]
-        }],
         photo: ['']
       });
     });
@@ -71,14 +73,20 @@ export class EditUserComponent implements OnInit {
       address: [this.model?.address, {
         validators: [Validators.required]
       }],
-      userType: [this.model?.userType, {
-        validators: [Validators.required]
-      }],
       photo: ['']
     });
   }
 
   edit(){
-    console.log('data');
+    this.model.firstName = this.form.controls['firstName'].value;
+    this.model.lastName = this.form.controls['lastName'].value;
+    this.model.username = this.form.controls['username'].value;
+    this.model.birthday = this.form.controls['birthday'].value;
+    this.model.address = this.form.controls['address'].value;
+    this.userService.update(this.model).subscribe( data => {
+      console.log(data)
+
+      this.router.navigateByUrl('user/profile');
+    });
   }
 }

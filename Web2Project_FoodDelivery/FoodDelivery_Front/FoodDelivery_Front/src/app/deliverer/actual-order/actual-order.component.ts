@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription, timer } from 'rxjs';
+import { DeliveryDto } from 'src/app/models/delivery.model';
 import { OrderDto } from 'src/app/models/order.model';
 import { ProductDto, UserProductDto } from 'src/app/models/product.model';
 import { OrderDetailsService } from 'src/app/order-details/order-details.service';
@@ -18,11 +21,36 @@ export class ActualOrderComponent implements OnInit {
   productsToDisplay:ProductDto[] = [];
   showDetails = false;
 
-  constructor(private delivererService: DelivererService, private security:SecurityService, private orderDetailsService: OrderDetailsService) { }
+  isDelivered = false;
+
+  countDown: Subscription;
+  counter = 1000;
+  tick = 1000;
+
+  constructor(private delivererService: DelivererService,
+              private security:SecurityService,
+              private orderDetailsService: OrderDetailsService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.delivererService.actualOrders(this.security.getLoggedUser()).subscribe(data =>{
       this.orders = data;
+
+      let order = this.orders[0];
+
+      if(order != null){
+        if(order.status == 1){
+          let time = new Date();
+          this.counter = order.takenTime - (time.getTime() / 1000 + 7150);
+
+          if(this.counter <= 0){
+
+          }
+          else{
+            this.countDown = timer(0, this.tick).subscribe(() => --this.counter);
+          }
+        }
+      }
     })
   }
 
@@ -38,5 +66,19 @@ export class ActualOrderComponent implements OnInit {
     });
 
     this.showDetails = true;
+  }
+
+  orderDelivered(){
+    console.log("delivered");
+    this.isDelivered = true;
+    let delivery = new DeliveryDto();
+    delivery.delivererEmail = this.security.getLoggedUser().email;
+    delivery.orderId = this.orders[0].id;
+
+    this.delivererService.deliver(delivery).subscribe( data => {
+      console.log(data);
+    })
+
+    this.router.navigateByUrl('deliverer/delivered-order');
   }
 }

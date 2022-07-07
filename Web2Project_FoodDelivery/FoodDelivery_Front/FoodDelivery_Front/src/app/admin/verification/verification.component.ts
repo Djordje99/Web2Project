@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RouteConfigLoadEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EmailDto, UserDto, VerifyDto } from 'src/app/models/user.model';
 import { SecurityService } from 'src/app/security/security.service';
@@ -19,11 +20,13 @@ export class VerificationComponent implements OnInit {
               private userService:UserService,
               private security : SecurityService,
               private toastr: ToastrService,
-              private sanitizer: DomSanitizer) { }
+              private sanitizer: DomSanitizer,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.adminService.getVerification().subscribe(data =>{
       this.users = data;
+      console.log(data[0].type)
     })
   }
 
@@ -33,12 +36,18 @@ export class VerificationComponent implements OnInit {
     let verify:VerifyDto = new VerifyDto();
     verify.email = user.email;
     verify.verifyType = 0;
-
     this.adminService.verifyApprove(verify).subscribe(data => {
       console.log(data);
     })
 
-    this.ngOnInit();
+
+    this.adminService.getVerification().subscribe(data =>{
+      this.users = data;
+    })
+
+    this.adminService.sendEmail();
+
+    this.router.navigateByUrl('admin/activation')
   }
 
   decline(index: number){
@@ -52,6 +61,10 @@ export class VerificationComponent implements OnInit {
       console.log(data);
     })
 
-    this.ngOnInit();
+    this.adminService.getVerification().subscribe(data =>{
+      this.users = data;
+    })
+
+    this.router.navigateByUrl('admin/activation')
   }
 }

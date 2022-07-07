@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { OrderDto } from '../models/order.model';
 import { ProductDto } from '../models/product.model';
 import { EmailDto, UserDto, VerifyDto } from '../models/user.model';
 
@@ -34,5 +35,20 @@ export class AdminService {
 
   createProduct(newProduct:ProductDto): Observable<ProductDto>{
     return this.http.post<ProductDto>(environment.api + '/api/admin/create-product', newProduct);
+  }
+
+  getOrders():Observable<OrderDto[]>{
+    return this.http.get<OrderDto[]>(environment.api + '/api/admin/get-orders')
+  }
+
+  sendEmail(){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post('https://formspree.io/f/xjvlqkay',
+      { name: 'FoodDelivery Verification', replyto: 'bozovicdjordje4@gmail.com', message: 'Admin accepted verification' },
+      { 'headers': headers }).subscribe(
+        response => {
+          console.log(response);
+        }
+      );
   }
 }

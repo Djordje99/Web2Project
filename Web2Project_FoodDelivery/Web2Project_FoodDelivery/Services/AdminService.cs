@@ -60,7 +60,7 @@ namespace Web2Project_FoodDelivery.Services
             foreach (var item in user)
             {
                 UserDto userDto = _mapper.Map<UserDto>(item);
-                if (userDto.Type == Enums.Enums.UserType.Deliverer && userDto.Veryfied != Enums.Enums.VeryfiedType.Approved)
+                if (userDto.Type == Enums.Enums.UserType.Deliverer)
                     userResult.Add(userDto);
             }
 

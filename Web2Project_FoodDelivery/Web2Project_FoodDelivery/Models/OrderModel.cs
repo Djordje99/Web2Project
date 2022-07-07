@@ -14,6 +14,8 @@ namespace Web2Project_FoodDelivery.Models
         public OrderStatusType Status { get; set; }
         public UserModel Creator { get; set; }
         public string CreatorEmail { get; set; }
+        public int Price { get; set; }
+        public long TakenTime { get; set; }
         public DeliveryModel Delivery { get; set; }
         public List<OrderDetailsModel> OrderDetails { get; set; }
     }

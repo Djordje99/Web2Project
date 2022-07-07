@@ -30,4 +30,8 @@ export class UserService {
   download(email:EmailDto) : Observable<Blob>{
     return this.http.post(environment.api + '/api/users/download ', email, { responseType: 'blob' });
   }
+
+  update(user: UserDto) : Observable<boolean>{
+    return this.http.put<boolean>(environment.api + '/api/users/update', user);
+  }
 }

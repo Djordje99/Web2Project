@@ -13,5 +13,6 @@ namespace Web2Project_FoodDelivery.Interfaces
         List<OrderDto> GetDeliveredOrders(UserEmailDto email);
         List<OrderDto> GetActualOrders(UserEmailDto email);
         List<OrderDetailsDto> GetOrdersDetails(UserEmailDto email);
+        bool Deliver(DeliveryDto delivery);
     }
 }

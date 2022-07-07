@@ -4,4 +4,6 @@ export class OrderDto{
     comment:string = '';
     status:number = 0;
     creatorEmail:string = '';
+    price:number = 0;
+    takenTime:number = 0;
 }

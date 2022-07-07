@@ -1,13 +1,31 @@
-<h2>Order Details</h2>
-
-<div>
-    <p>{{order.address}}</p>
-    <p>{{order.comment}}</p>
-    <p>{{order.status}}</p>
-    <ng-container *ngFor="let product of products">
-        <p>{{product.name}}</p>
-        <p>{{product.ingredients}}</p>
-        <p>{{product.price}}</p>
-        <p>{{product.amount}}</p>
-    </ng-container>
+<div class="main-div">
+    <mat-card class="mat-size" style="text-align: center;">
+        <mat-card-title>
+            <h2>Order Details</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <mat-card>
+                <div class="center-div">
+                    <p class="stylename">Address: {{order.address}}</p>
+                    <p class="stylename">Comment: {{order.comment}}</p>
+                    <p class="stylename">Price: {{order.price}}</p>
+                    <p class="stylename" *ngIf="order.status == 0">Order Status: Waiting</p>
+                    <p class="stylename" *ngIf="order.status == 1">Order Status: In Progress</p>
+                    <p class="stylename" *ngIf="order.status == 2">Order Status: Delivered</p>
+                </div>
+            </mat-card>
+            <div class="left-div">
+                <ng-container *ngFor="let product of products" class="product-container">
+                    <mat-card>
+                        <mat-card-content>
+                            <p class="stylename">{{product.name}}</p>
+                            <p class="stylename">{{product.ingredients}}</p>
+                            <p class="stylename">{{product.price | currency:'RSD'}}</p>
+                            <p class="stylename">{{product.amount}}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </ng-container>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

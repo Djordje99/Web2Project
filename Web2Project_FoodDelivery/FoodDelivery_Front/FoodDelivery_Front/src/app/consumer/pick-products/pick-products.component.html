@@ -5,8 +5,8 @@
         </mat-card-title>
         <mat-card-content>
             <div class="left-div">
-                <div *ngFor="let product of products; let index = index" class="product-container">
-                    <mat-card style="text-align: center;">
+                <div *ngFor="let product of products; let index = index">
+                    <mat-card style="text-align: center;" class="card-container">
                         <mat-card-content>
                             <div>
                                 <p class="stylename">{{product.name}}</p>

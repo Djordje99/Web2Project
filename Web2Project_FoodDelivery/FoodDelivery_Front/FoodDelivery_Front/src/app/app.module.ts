@@ -4,7 +4,7 @@ import {HttpClientModule} from '@angular/common/http'
 import {ToastrModule} from 'ngx-toastr'
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, FormatTimePipe } from './app.component';
 import { LogInComponent } from './user/log-in/log-in.component';
 import { RegisterComponent } from './user/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,7 +13,6 @@ import {ReactiveFormsModule} from '@angular/forms'
 import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './home/home.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
-import { CreateOrderComponent } from './consumer/create-order/create-order.component';
 import { PreviousOrdersComponent } from './consumer/previous-orders/previous-orders.component';
 import { VerificationComponent } from './admin/verification/verification.component';
 import { AvailableOrdersComponent } from './deliverer/available-orders/available-orders.component';
@@ -40,7 +39,6 @@ import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@
     MenuComponent,
     HomeComponent,
     EditUserComponent,
-    CreateOrderComponent,
     PreviousOrdersComponent,
     VerificationComponent,
     AvailableOrdersComponent,
@@ -54,6 +52,7 @@ import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@
     CurrentOrderComponent,
     OrderDetailsComponent,
     ActivationComponent,
+    FormatTimePipe,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +64,9 @@ import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@
     ToastrModule.forRoot(),
     OAuthModule.forRoot(),
     SocialLoginModule,
+  ],
+  exports: [
+    FormatTimePipe
   ],
   providers: [
     {

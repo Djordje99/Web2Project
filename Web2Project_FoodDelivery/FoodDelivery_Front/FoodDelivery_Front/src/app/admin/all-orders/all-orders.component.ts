@@ -3,6 +3,7 @@ import { OrderDto } from 'src/app/models/order.model';
 import { ProductDto, UserProductDto } from 'src/app/models/product.model';
 import { OrderDetailsService } from 'src/app/order-details/order-details.service';
 import { SecurityService } from 'src/app/security/security.service';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-all-orders',
@@ -18,9 +19,12 @@ export class AllOrdersComponent implements OnInit {
 
   showDetails = false
 
-  constructor(private orderDetailsService: OrderDetailsService, private security: SecurityService) { }
+  constructor(private adminService: AdminService, private orderDetailsService: OrderDetailsService, private security: SecurityService) { }
 
   ngOnInit(): void {
+    this.adminService.getOrders().subscribe( data => {
+      this.orders = data;
+    })
   }
 
   getDetails(index:number){

@@ -4,7 +4,6 @@ import { ActivationComponent } from './admin/activation/activation.component';
 import { AllOrdersComponent } from './admin/all-orders/all-orders.component';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
 import { VerificationComponent } from './admin/verification/verification.component';
-import { CreateOrderComponent } from './consumer/create-order/create-order.component';
 import { CurrentOrderComponent } from './consumer/current-order/current-order.component';
 import { OrderProductsComponent } from './consumer/order-products/order-products.component';
 import { PickProductsComponent } from './consumer/pick-products/pick-products.component';
@@ -31,7 +30,6 @@ const routes: Routes = [
   {path: 'admin/create-product', component: CreateProductComponent},
   {path: 'admin/activation', component: ActivationComponent},
 
-  {path: 'consumer/create-order', component: CreateOrderComponent},
   {path: 'consumer/order-products', component: OrderProductsComponent},
   {path: 'consumer/previous-order', component: PreviousOrdersComponent},
   {path: 'consumer/pick-products', component: PickProductsComponent},

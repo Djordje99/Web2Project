@@ -25,6 +25,11 @@ namespace Web2Project_FoodDelivery.Services
 
         public OrderDto CreateOrder(OrderDto newOrder)
         {
+            var currentOrder = _dbContext.Orders.Where(x => x.CreatorEmail == newOrder.CreatorEmail 
+                                                            && x.Status != Enums.Enums.OrderStatusType.Delivered).ToList();
+            if (currentOrder.Count > 0)
+                return null;
+
             OrderModel order = _mapper.Map<OrderModel>(newOrder);
 
             order.Status = Enums.Enums.OrderStatusType.Wating;
@@ -64,18 +69,13 @@ namespace Web2Project_FoodDelivery.Services
             return orders;
         }
 
-        public List<OrderDto> GetCurrentOrders(UserEmailDto email)
+        public OrderDto GetCurrentOrders(UserEmailDto email)
         {
             List<OrderDto> orders = new List<OrderDto>();
 
-            var ordersModel = _dbContext.Orders.Where(x => x.CreatorEmail == email.Email && x.Status != Enums.Enums.OrderStatusType.Delivered).ToList();
-
-            foreach (var item in ordersModel)
-            {
-                orders.Add(_mapper.Map<OrderDto>(item));
-            }
-
-            return orders;
+            var orderModel = _dbContext.Orders.Where(x => x.CreatorEmail == email.Email && x.Status != Enums.Enums.OrderStatusType.Delivered).FirstOrDefault();
+            
+            return _mapper.Map<OrderDto>(orderModel);
         }
 
 

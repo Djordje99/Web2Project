@@ -31,7 +31,7 @@ export class SecurityService {
 
     const tokenData = JSON.parse(atob(token.split('.')[1]));
 
-    email.email = tokenData['email'];
+    email.email = tokenData['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
     console.log(email.email);
     return email;
   }
@@ -43,7 +43,7 @@ export class SecurityService {
     }
 
     const tokenData = JSON.parse(atob(token.split('.')[1]));
-    return tokenData['role'];
+    return tokenData['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
   }
 
 }

@@ -53,7 +53,9 @@ namespace Web2Project_FoodDelivery.Migrations
                     Comment = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatorEmail = table.Column<string>(type: "nvarchar(30)", nullable: true)
+                    CreatorEmail = table.Column<string>(type: "nvarchar(30)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    TakenTime = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -23,8 +23,20 @@ namespace Web2Project_FoodDelivery.Controllers
         [HttpPost("take-order")]
         public IActionResult TakeOrder([FromBody] DeliveryDto delivery)
         {
-            return Ok(_delivererService.TakeOrder(delivery));
+            var result = _delivererService.TakeOrder(delivery);
+
+            if (result == -1)
+                return BadRequest("Deliverer has olready order in progress.");
+
+            return Ok(result);
         }
+
+        [HttpPost("deliver")]
+        public IActionResult Deliver([FromBody] DeliveryDto delivery)
+        {
+            return Ok(_delivererService.Deliver(delivery));
+        }
+
 
         [HttpGet("available-orders")]
         public IActionResult SeeAvailableOrders()

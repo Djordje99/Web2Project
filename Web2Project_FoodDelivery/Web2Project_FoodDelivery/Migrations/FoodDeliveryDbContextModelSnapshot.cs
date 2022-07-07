@@ -91,8 +91,14 @@ namespace Web2Project_FoodDelivery.Migrations
                     b.Property<string>("CreatorEmail")
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<long>("TakenTime")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

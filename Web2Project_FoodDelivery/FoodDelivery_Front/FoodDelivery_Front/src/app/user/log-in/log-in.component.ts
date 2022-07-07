@@ -14,8 +14,10 @@ export class LogInComponent implements OnInit {
 
   socialUser;
 
-  constructor(private formBuilder: UntypedFormBuilder, private userService: UserService, private router: Router, private toastr: ToastrService) {
-  }
+  constructor(private formBuilder: UntypedFormBuilder,
+              private userService: UserService,
+              private router: Router,
+              private toastr: ToastrService) {}
 
   form = this.formBuilder.group({
     email: ['', {

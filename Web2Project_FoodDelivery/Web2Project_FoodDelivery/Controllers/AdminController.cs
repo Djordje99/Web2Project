@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,39 +22,82 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("activate")]
+        [Authorize(Roles = "Admin")]
         public IActionResult ActivateUser([FromBody]UserEmailDto email)
         {
-            return Ok(_adminService.ActivateUser(email));
+            if (email.Email == "")
+                return BadRequest("Bad email foramt");
+
+            var result = _adminService.ActivateUser(email);
+
+            if (!result)
+                return BadRequest("Activation failed");
+            else
+                return Ok(result);
         }
 
         [HttpPost("verify")]
+        [Authorize(Roles = "Admin")]
         public IActionResult VerifyDeliverer([FromBody] VerifyDto delivererVerify)
         {
-            return Ok(_adminService.VerifyDeliverer(delivererVerify));
+            if (delivererVerify.Email == "")
+                return BadRequest("Bad email foramt");
+
+            var result = _adminService.VerifyDeliverer(delivererVerify);
+
+            if (!result)
+                return BadRequest("Verifivation failed");
+            else
+                return Ok(result);
         }
 
         [HttpGet("deliverers-status")]
+        [Authorize(Roles = "Admin")]
         public IActionResult SeeDeliverersStatus()
         {
-            return Ok(_adminService.SeeDelivererStatus());
+            var result = _adminService.SeeDelivererStatus();
+
+            if (result == null)
+                return BadRequest("Retriving deliveres failed.");
+            return Ok(result);
         }
 
         [HttpGet("activation-request")]
+        [Authorize(Roles = "Admin")]
         public IActionResult SeeActivationRequests()
         {
-            return Ok(_adminService.SeeActivationRequests());
+            var result = _adminService.SeeActivationRequests();
+
+            if (result == null)
+                return BadRequest("Retriving deliveres failed.");
+            return Ok(result);
         }
 
         [HttpPost("create-product")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateProduct([FromBody] ProductDto newProduct)
         {
-            return Ok(_adminService.CreateProduct(newProduct));
+            if (newProduct.Ingredients == "" || newProduct.Price < 0 || newProduct.Name == "")
+                return BadRequest("Product missing filed fields");
+
+            var result = _adminService.CreateProduct(newProduct);
+
+            if (result == null)
+                return BadRequest("Creating product failed.");
+
+            return Ok(result);
         }
 
         [HttpGet("get-orders")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetOrders()
         {
-            return Ok(_adminService.GetAllOrders());
+            var result = _adminService.GetAllOrders();
+
+            if (result == null)
+                return BadRequest("Getting order faild.");
+
+            return Ok(result);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Web2Project_FoodDelivery.Infrastructure
         public DbSet<OrderModel> Orders { get; set; }
         public DbSet<OrderDetailsModel> OrderDetails { get; set; }
         public DbSet<DeliveryModel> Deliveries { get; set; }
-
+        //sds
         public FoodDeliveryDbContext(DbContextOptions options) : base(options)
         {
         }

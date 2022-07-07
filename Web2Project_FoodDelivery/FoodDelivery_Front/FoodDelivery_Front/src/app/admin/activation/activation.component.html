@@ -1,13 +1,36 @@
-<h2>Activation Requests</h2>
+<div class="main-div">
+    <mat-card style="text-align: center;">
+        <mat-card-title>
+            <h2>Activation Requests</h2>
+        </mat-card-title>
 
-<div>
-    <ol>
-        <ng-container *ngFor="let user of users; let i = index">
-            <li *ngIf="user.verified !== 0">
-                <p>{{user.username}}</p>
-                <p>{{user.firstName}} {{user.lastName}}</p>
-                <button mat-flat-button color="primary" (click)="activate(i)">Accept</button>
-            </li>
-        </ng-container>
-    </ol>
+        <mat-card-content>
+            <div class="left-div">
+                <ng-container *ngFor="let user of users; let i = index">
+                    <mat-card class="content" style="text-align: center;">
+                        <mat-card-content>
+                            <div>
+                                <p class="stylename">{{user.firstName}}  {{user.lastName}}</p>
+                            </div>
+                            <div>
+                                <p class="stylename">{{user.email}}</p>
+                            </div>
+                            <div>
+                                <p class="stylename">{{user.username}}</p>
+                            </div>
+                            <div>
+                                <p class="stylename">{{user.address}}</p>
+                            </div>
+                            <div>
+                                <p class="stylename">{{user.birthday | date}}</p>
+                            </div>
+                            <div>
+                                <button mat-flat-button color="primary" (click)="activate(i)">Accept</button>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </ng-container>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

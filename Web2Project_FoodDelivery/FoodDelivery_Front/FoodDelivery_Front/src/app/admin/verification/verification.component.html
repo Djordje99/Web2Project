@@ -24,10 +24,16 @@
                             <div>
                                 <p class="stylename">{{user.birthday | date}}</p>
                             </div>
-                            <div>
+                            <ng-container *ngIf="user.veryfied=== 2">
                                 <button mat-flat-button color="primary" (click)="accept(i)">Approve</button>
                                 <button mat-flat-button color="warn" (click)="decline(i)">Decline</button>
-                            </div>
+                            </ng-container>
+                            <ng-container *ngIf="user.veryfied === 1">
+                                <p class="stylename">Denied</p>
+                            </ng-container>
+                            <ng-container *ngIf="user.veryfied === 0">
+                                <p class="stylename">Approved</p>
+                            </ng-container>
                         </mat-card-content>
                     </mat-card>
                 </ng-container>

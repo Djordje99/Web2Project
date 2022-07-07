@@ -28,14 +28,14 @@ export class ProfileComponent implements OnInit {
     this.userService.getUser(this.security.getLoggedUser()).subscribe(data => {
       if(data != null){
         this.user = data;
-        if(this.user.verified == 0)
+        if(this.user.veryfied == 0)
           this.verify = "Approved";
-        else if(this.user.verified == 1)
+        else if(this.user.veryfied == 1)
           this.verify = "Denied";
 
-        if(this.user.userType == 0)
+        if(this.user.type == 0)
           this.userType = 'Admin';
-        else if (this.user.userType == 1)
+        else if (this.user.type == 1)
           this.userType = 'Consumer';
 
         this.show = true;

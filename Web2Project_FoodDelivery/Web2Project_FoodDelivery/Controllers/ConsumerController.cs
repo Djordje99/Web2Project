@@ -23,7 +23,11 @@ namespace Web2Project_FoodDelivery.Controllers
         [HttpPost("create-order")]
         public IActionResult CreateOrder([FromBody] OrderDto newOrder)
         {
-            return Ok(_consumerService.CreateOrder(newOrder));
+            var order = _consumerService.CreateOrder(newOrder);
+            if (order == null)
+                return BadRequest("Consumer already have current order.");
+
+            return Ok(order);
         }
 
         [HttpPost("add-product-details")]

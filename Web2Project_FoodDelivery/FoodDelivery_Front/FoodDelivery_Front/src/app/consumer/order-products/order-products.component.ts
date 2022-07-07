@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { OrderDto } from 'src/app/models/order.model';
 import { OrderProductDto, ProductDto } from 'src/app/models/product.model';
 import { SecurityService } from 'src/app/security/security.service';
@@ -16,13 +17,15 @@ export class OrderProductsComponent implements OnInit {
   price:number;
   formOrder:UntypedFormGroup;
 
-  constructor(private formBuilder: UntypedFormBuilder, public consumerService: ConsumerService, private security:SecurityService) { }
+  constructor(private formBuilder: UntypedFormBuilder,
+              public consumerService: ConsumerService,
+              private security:SecurityService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.productToOrder = this.consumerService.pickedProducts;
-    console.log(this.consumerService.pickedProducts);
 
-    this.price = 0;
+    this.price = 125;
     this.productToOrder.forEach(product => {
       this.price += (product.amount * product.price);
     });
@@ -44,9 +47,12 @@ export class OrderProductsComponent implements OnInit {
     let order = new OrderDto;
     order.address = this.formOrder.controls['address'].value;
     order.comment = this.formOrder.controls['comment'].value;
+    order.price = this.formOrder.controls['price'].value;
     order.creatorEmail = this.security.getLoggedUser().email;
 
     this.consumerService.createOrder(order).subscribe( data => {
+      console.log(data)
+      console.log(this.consumerService.pickedProducts)
       if(data != null){
         this.consumerService.pickedProducts.forEach(product => {
           let productDto = new OrderProductDto();
@@ -55,20 +61,32 @@ export class OrderProductsComponent implements OnInit {
           productDto.productId = product.id;
           productDto.currentPrice = product.price;
 
+          console.log(productDto)
+
           this.consumerService.orderProduct(productDto).subscribe(productData => {
             console.log(productData);
           });
         });
+
+        this.toastr.info("You created order.")
+        this.consumerService.removePickedProducts();
+        this.productToOrder = []
       }
+    },
+    error => {
+      this.toastr.error(error.error);
     });
 
     this.formOrder.reset();
-    this.productToOrder = [];
+
   }
 
   remove(index:number){
     console.log(index)
     console.log(this.price)
+
+    this.toastr.info('You removed ' + this.consumerService.pickedProducts[index].name + 'from cart.')
+
     this.consumerService.pickedProducts.splice(index, 1);
     this.ngOnInit();
   }

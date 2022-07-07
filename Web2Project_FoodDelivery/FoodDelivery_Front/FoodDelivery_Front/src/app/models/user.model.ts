@@ -32,9 +32,9 @@ export class UserDto{
     lastName: string = '';
     birthday: Date = new Date();
     address: string = '';
-    userType: number = 0;
+    type: number = 0;
     picture: string = '';
-    verified: number = 0;
+    veryfied: number = 0;
     accepredRegistration: boolean = false;
 }
 export class VerifyDto{

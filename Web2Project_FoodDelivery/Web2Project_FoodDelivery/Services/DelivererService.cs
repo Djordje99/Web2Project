@@ -40,6 +40,14 @@ namespace Web2Project_FoodDelivery.Services
 
         public int TakeOrder(DeliveryDto delivery)
         {
+            var takenDeliveris = _dbContext.Deliveries.Where(x => x.DelivererEmail == delivery.DelivererEmail);
+            foreach (var item in takenDeliveris)
+            {
+                var takenOrder = _dbContext.Orders.Find(item.OrderId);
+                if (takenOrder.Status != Enums.Enums.OrderStatusType.Delivered)
+                    return -1;
+            }
+
             var order = _dbContext.Orders.Find(delivery.OrderId);
             var user = _dbContext.Users.Find(delivery.DelivererEmail);
 
@@ -48,12 +56,21 @@ namespace Web2Project_FoodDelivery.Services
                 return -1;
 
             order.Status = Enums.Enums.OrderStatusType.InProgress;
+
+            DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);//from 1970/1/1 00:00:00 to now
+            DateTime dtNow = DateTime.Now;
+            TimeSpan result = dtNow.Subtract(dt);
+            int seconds = Convert.ToInt32(result.TotalSeconds);
+
+            var time = new Random().Next(1, 40);
+
+            order.TakenTime = seconds + time;
             _dbContext.Orders.Update(order);
 
             _dbContext.Deliveries.Add(_mapper.Map<DeliveryModel>(delivery));
             _dbContext.SaveChanges();
 
-            return new Random().Next(1, 40); 
+            return time;
         }
 
         public List<OrderDto> GetDeliveredOrders(UserEmailDto email)
@@ -111,6 +128,21 @@ namespace Web2Project_FoodDelivery.Services
             }
 
             return orderDetails;
+        }
+
+        public bool Deliver(DeliveryDto delivery)
+        {
+            var order = _dbContext.Orders.Find(delivery.OrderId);
+
+            if (order == null)
+                return false;
+
+            order.Status = Enums.Enums.OrderStatusType.Delivered;
+
+            _dbContext.Update(order);
+            _dbContext.SaveChanges();
+
+            return true;
         }
     }
 }

@@ -1,19 +1,34 @@
-<h2>Available Orders</h2>
-
-<div>
-    <ol>
-        <ng-container *ngFor="let order of availableOrders; let i = index">
-            <li>
-                <p>Address: {{order.address}}</p>
-                <p>Comment: {{order.comment}}</p>
-                <button mat-flat-button color="primary" (click)="takeOrder(i)">Take Order</button>
-                <button mat-flat-button color="primary" (click)="getDetails(i)">Details</button>
-            </li>
-        </ng-container>
-    </ol>
+<div class="main-div">
+    <mat-card class="mat-size"style="text-align: center;">
+        <mat-card-title>
+            <h2>Available Orders</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <div class="left-div">
+                <div *ngFor="let order of availableOrders; let i = index" class="product-container">
+                    <mat-card>
+                        <mat-card-content>
+                            <p class="stylename">Address: {{order.address}}</p>
+                            <p class="stylename">Comment: {{order.comment}}</p>
+                            <button mat-flat-button color="primary" (click)="takeOrder(i)">Take Order</button>
+                            <button mat-flat-button color="primary" (click)="getDetails(i)">Details</button>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <ng-container *ngIf="showDetails">
+                <app-order-details [order]="orderToDisplay" [products]="productsToDisplay"></app-order-details>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
 </div>
 
-<ng-container *ngIf="showDetails">
-    <app-order-details [order]="orderToDisplay" [products]="productsToDisplay"></app-order-details>
-</ng-container>
+
+
+
+
+
+
+
+
 

@@ -39,7 +39,11 @@ export class ConsumerService {
     return this.http.post<OrderDto[]>(environment.api + '/api/consumer/get-orders', email);
   }
 
-  currentOrders(email:EmailDto): Observable<OrderDto[]>{
-    return this.http.post<OrderDto[]>(environment.api + '/api/consumer/get-current-orders', email);
+  currentOrders(email:EmailDto): Observable<OrderDto>{
+    return this.http.post<OrderDto>(environment.api + '/api/consumer/get-current-orders', email);
+  }
+
+  removePickedProducts(){
+    this.pickedProducts = [];
   }
 }

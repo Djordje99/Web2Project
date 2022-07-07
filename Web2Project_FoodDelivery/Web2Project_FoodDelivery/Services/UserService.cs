@@ -43,24 +43,24 @@ namespace Web2Project_FoodDelivery.Services
             {
                 if (user.Type == Enums.Enums.UserType.Consumer)
                 {
-                    claims.Add(new Claim("role", "Consumer"));
+                    claims.Add(new Claim(ClaimTypes.Role, "Consumer"));
                 }
                 else if (user.Type == Enums.Enums.UserType.Deliverer)
                 {
-                    claims.Add(new Claim("role", "Deliverer"));
+                    claims.Add(new Claim(ClaimTypes.Role, "Deliverer"));
                 }
                 else if (user.Type == Enums.Enums.UserType.Admin)
                 {
-                    claims.Add(new Claim("role", "Admin"));
+                    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                 }
 
-                claims.Add(new Claim("email", user.Email));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Email));
 
 
                 SymmetricSecurityKey secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey.Value));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:44323/",
+                    issuer: "https://localhost:44323",
                     claims: claims,
                     expires: DateTime.Now.AddMinutes(20),
                     signingCredentials: signinCredentials
@@ -140,7 +140,7 @@ namespace Web2Project_FoodDelivery.Services
         public bool UpdateUser(UserDto updateUser)
         {
             _dbContext.Users.Update(_mapper.Map<UserModel>(updateUser));
-
+            _dbContext.SaveChanges();
             return true;
         }
 

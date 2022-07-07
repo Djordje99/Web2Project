@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { ProductDto } from 'src/app/models/product.model';
 import { ConsumerService } from '../consumer.service';
 
@@ -12,7 +13,9 @@ export class PickProductsComponent implements OnInit {
 
   products:ProductDto[] = [];
 
-  constructor(private consumerService: ConsumerService, private formBuilder: UntypedFormBuilder) { }
+  constructor(private consumerService: ConsumerService,
+              private formBuilder: UntypedFormBuilder,
+              private toastr: ToastrService) { }
 
   form = this.formBuilder.group({
     amount: ['', {
@@ -31,5 +34,9 @@ export class PickProductsComponent implements OnInit {
     let selectedProduct = this.products[index];
     selectedProduct.amount = this.form.controls['amount'].value;
     this.consumerService.addProduct(selectedProduct);
+
+    this.form.reset()
+
+    this.toastr.info('Product ' + selectedProduct.name + ' is added to cart.')
   }
 }

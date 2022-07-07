@@ -11,7 +11,7 @@ namespace Web2Project_FoodDelivery.Interfaces
         OrderDto CreateOrder(OrderDto newOrder);
         OrderDetailsDto AddProdactOrder(OrderDetailsDto product);
         List<OrderDto> GetOrders(UserEmailDto email);
-        List<OrderDto> GetCurrentOrders(UserEmailDto email);
+        OrderDto GetCurrentOrders(UserEmailDto email);
         List<ProductDto> GetOrdersDetails(UserProductsDto userProducts);
     }
 }

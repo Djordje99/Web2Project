@@ -14,7 +14,7 @@ namespace Web2Project_FoodDelivery.DTO
         public string Address { get; set; }
         public OrderStatusType Status { get; set; }
         public string CreatorEmail { get; set; }
-        //public string DelivererEmail { get; set; }
-        //public List<long> OrderDetailsIds { get; set; }
+        public int Price { get; set; }
+        public long TakenTime { get; set; }
     }
 }
