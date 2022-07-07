@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,12 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("create-order")]
+        [Authorize(Roles = "Consumer")]
         public IActionResult CreateOrder([FromBody] OrderDto newOrder)
         {
+            if (newOrder.Address == "" || newOrder.Comment == "" || newOrder.Price < 0 || newOrder.CreatorEmail == "")
+                return BadRequest("Order parameters are not given");
+
             var order = _consumerService.CreateOrder(newOrder);
             if (order == null)
                 return BadRequest("Consumer already have current order.");
@@ -31,27 +36,61 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("add-product-details")]
+        [Authorize(Roles = "Consumer")]
         public IActionResult AddOrderDetails([FromBody] OrderDetailsDto product)
         {
-            return Ok(_consumerService.AddProdactOrder(product));
+            if (product.ProductId < 0 || product.OrderId < 0)
+                return BadRequest("Products parameters are not given.");
+
+            var result = _consumerService.AddProdactOrder(product);
+
+            if (result == null)
+                return BadRequest("Adding product to order failed.");
+            return Ok(result);
         }
 
         [HttpPost("get-orders")]
+        [Authorize(Roles = "Consumer")]
         public IActionResult GetOrders([FromBody] UserEmailDto email)
         {
-            return Ok(_consumerService.GetOrders(email));
+            if (email.Email == "")
+                return BadRequest("Email not valid.");
+
+            var result = _consumerService.GetOrders(email);
+
+            if (result == null)
+                return BadRequest("Getting orders failed");
+
+            return Ok(result);
         }
 
         [HttpPost("get-current-orders")]
+        [Authorize(Roles = "Consumer")]
         public IActionResult GetCurrentOrders([FromBody] UserEmailDto email)
         {
-            return Ok(_consumerService.GetCurrentOrders(email));
+            if (email.Email == "")
+                return BadRequest("Email not valid.");
+
+            var result = _consumerService.GetCurrentOrders(email);
+
+            if (result == null)
+                return BadRequest("Current order does not exists.");
+
+            return Ok(result);
         }
-        
+
         [HttpPost("get-orders-details")]
+        [Authorize(Roles = "Consumer")]
         public IActionResult GetOrdersDetails([FromBody] UserProductsDto userProducts)
         {
-            return Ok(_consumerService.GetOrdersDetails(userProducts));
+            if (userProducts.OrderId < 0 || userProducts.Email == "")
+                return BadRequest("Bad parameters.");
+
+            var result = _consumerService.GetOrdersDetails(userProducts);
+            if (result == null)
+                return BadRequest("Getting details failed");
+
+            return Ok(result);
         }
     }
 }

@@ -4,6 +4,7 @@ import { ActivationComponent } from './admin/activation/activation.component';
 import { AllOrdersComponent } from './admin/all-orders/all-orders.component';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
 import { VerificationComponent } from './admin/verification/verification.component';
+import { AuthGuard } from './auth/auth-guard';
 import { CurrentOrderComponent } from './consumer/current-order/current-order.component';
 import { OrderProductsComponent } from './consumer/order-products/order-products.component';
 import { PickProductsComponent } from './consumer/pick-products/pick-products.component';
@@ -22,23 +23,23 @@ const routes: Routes = [
 
   {path: 'user/register', component: RegisterComponent},
   {path: 'user/login', component: LogInComponent},
-  {path: 'user/profile', component: ProfileComponent},
-  {path: 'user/edit/:id', component: EditUserComponent},
+  {path: 'user/profile', component: ProfileComponent, canActivate:[AuthGuard]},
+  {path: 'user/edit/:id', component: EditUserComponent, canActivate:[AuthGuard]},
 
-  {path: 'admin/verification', component: VerificationComponent},
-  {path: 'admin/all-orders', component: AllOrdersComponent},
-  {path: 'admin/create-product', component: CreateProductComponent},
-  {path: 'admin/activation', component: ActivationComponent},
+  {path: 'admin/verification', component: VerificationComponent, canActivate:[AuthGuard]},
+  {path: 'admin/all-orders', component: AllOrdersComponent, canActivate:[AuthGuard]},
+  {path: 'admin/create-product', component: CreateProductComponent, canActivate:[AuthGuard]},
+  {path: 'admin/activation', component: ActivationComponent, canActivate:[AuthGuard]},
 
-  {path: 'consumer/order-products', component: OrderProductsComponent},
-  {path: 'consumer/previous-order', component: PreviousOrdersComponent},
-  {path: 'consumer/pick-products', component: PickProductsComponent},
-  {path: 'consumer/current-order', component: CurrentOrderComponent},
+  {path: 'consumer/order-products', component: OrderProductsComponent, canActivate:[AuthGuard]},
+  {path: 'consumer/previous-order', component: PreviousOrdersComponent, canActivate:[AuthGuard]},
+  {path: 'consumer/pick-products', component: PickProductsComponent, canActivate:[AuthGuard]},
+  {path: 'consumer/current-order', component: CurrentOrderComponent, canActivate:[AuthGuard]},
 
 
-  {path: 'deliverer/available-order', component: AvailableOrdersComponent},
-  {path: 'deliverer/delivered-order', component: DeliveredOrdersComponent},
-  {path: 'deliverer/actual-order', component: ActualOrderComponent}
+  {path: 'deliverer/available-order', component: AvailableOrdersComponent, canActivate:[AuthGuard]},
+  {path: 'deliverer/delivered-order', component: DeliveredOrdersComponent, canActivate:[AuthGuard]},
+  {path: 'deliverer/actual-order', component: ActualOrderComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({
