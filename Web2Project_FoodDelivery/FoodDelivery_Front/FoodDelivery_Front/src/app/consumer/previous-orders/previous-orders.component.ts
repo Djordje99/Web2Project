@@ -15,6 +15,7 @@ export class PreviousOrdersComponent implements OnInit {
   constructor(private consumerService: ConsumerService, private security: SecurityService, private orderDetailsService: OrderDetailsService) { }
 
   orders:OrderDto[] = []
+  show:boolean = false;
 
   orderToDisplay:OrderDto = new OrderDto();
   productsToDisplay:ProductDto[] = [];
@@ -35,5 +36,7 @@ export class PreviousOrdersComponent implements OnInit {
     this.orderDetailsService.getOrderProducts(userProduct).subscribe( data => {
       this.productsToDisplay = data;
     });
+
+    this.show = true;
   }
 }

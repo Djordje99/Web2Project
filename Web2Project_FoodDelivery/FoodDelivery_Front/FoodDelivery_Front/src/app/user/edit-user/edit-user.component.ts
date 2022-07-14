@@ -15,6 +15,7 @@ export class EditUserComponent implements OnInit {
 
   model:UserDto = new UserDto;
   form:UntypedFormGroup;
+  file:File;
 
   constructor(private activatedRoute: ActivatedRoute,
               private userService: UserService,
@@ -83,10 +84,27 @@ export class EditUserComponent implements OnInit {
     this.model.username = this.form.controls['username'].value;
     this.model.birthday = this.form.controls['birthday'].value;
     this.model.address = this.form.controls['address'].value;
-    this.userService.update(this.model).subscribe( data => {
+    this.userService.update(this.model).subscribe(data => {
       console.log(data)
+      if(this.file != null){
+        this.uploadFile(this.model.email)
+      }
 
       this.router.navigateByUrl('user/profile');
+    });
+  }
+
+  pickImage(event){
+    this.file = event.target.files[0];
+    console.log(this.file.name)
+  }
+
+  uploadFile(email:string){
+    const formData = new FormData();
+    formData.append(email, this.file, this.file.name);
+
+    this.userService.upload(formData).subscribe(data => {
+        console.log("Image uploaded");
     });
   }
 }

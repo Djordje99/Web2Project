@@ -10,7 +10,7 @@ using Web2Project_FoodDelivery.Infrastructure;
 namespace Web2Project_FoodDelivery.Migrations
 {
     [DbContext(typeof(FoodDeliveryDbContext))]
-    [Migration("20220707101142_FoodDelivery")]
+    [Migration("20220714110019_FoodDelivery")]
     partial class FoodDelivery
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

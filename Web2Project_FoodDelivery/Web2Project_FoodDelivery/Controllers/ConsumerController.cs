@@ -80,7 +80,7 @@ namespace Web2Project_FoodDelivery.Controllers
         }
 
         [HttpPost("get-orders-details")]
-        [Authorize(Roles = "Consumer")]
+        [Authorize(Roles = "Consumer,Admin,Deliverer")]
         public IActionResult GetOrdersDetails([FromBody] UserProductsDto userProducts)
         {
             if (userProducts.OrderId < 0 || userProducts.Email == "")

@@ -21,7 +21,8 @@
                     <p class="stylename">{{user.birthday | date}}</p>
                 </div>
                 <div>
-                    <p class="stylename">{{userType}}  {{verify}}</p>
+                    <p *ngIf="userType != 'Deliverer'" class="stylename">{{userType}}</p>
+                    <p *ngIf="userType == 'Deliverer'" class="stylename">{{userType}}  {{verify}}</p>
                 </div>
                 <div>
                     <img [src]="picture"/>

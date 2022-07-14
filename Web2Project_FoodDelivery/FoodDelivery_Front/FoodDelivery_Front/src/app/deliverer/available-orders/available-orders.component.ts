@@ -5,7 +5,6 @@ import { OrderDto } from 'src/app/models/order.model';
 import { ProductDto, UserProductDto } from 'src/app/models/product.model';
 import { OrderDetailsService } from 'src/app/order-details/order-details.service';
 import { SecurityService } from 'src/app/security/security.service';
-import { TimerService } from 'src/app/shared/timer.service';
 import { DelivererService } from '../deliverer.service';
 
 @Component({

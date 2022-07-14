@@ -6,48 +6,38 @@
         </span>
         <div *ngIf="security.getLoggedRole() == 'Consumer'">
             <span>
-                <a routerLink="consumer/order-products" mat-button>
-                    <mat-icon>cart</mat-icon>Create Order</a>
+                <a routerLink="consumer/order-products" mat-button>Create Order</a>
             </span>
             <span>
-                <a routerLink="consumer/previous-order" mat-button>
-                    <mat-icon>previous</mat-icon>Previous Orders</a>
+                <a routerLink="consumer/previous-order" mat-button>Previous Orders</a>
             </span>
             <span>
-                <a routerLink="consumer/current-order" mat-button>
-                    <mat-icon>previous</mat-icon>Current Orders</a>
+                <a routerLink="consumer/current-order" mat-button>Current Orders</a>
             </span>
         </div>
         <div *ngIf="security.getLoggedRole() == 'Deliverer'">
             <span>
-                <a routerLink="deliverer/available-order" mat-button>
-                    <mat-icon>order</mat-icon>Available Orders</a>
+                <a routerLink="deliverer/available-order" mat-button>Available Orders</a>
             </span>
             <span>
-                <a routerLink="deliverer/delivered-order" mat-button>
-                    <mat-icon>previous</mat-icon>Delivered Orders</a>
+                <a routerLink="deliverer/delivered-order" mat-button>Delivered Orders</a>
             </span>
             <span>
-                <a routerLink="deliverer/actual-order" mat-button>
-                    <mat-icon>cart</mat-icon>Actual Order</a>
+                <a routerLink="deliverer/actual-order" mat-button>Actual Order</a>
             </span>
         </div>
         <div *ngIf="security.getLoggedRole() == 'Admin'">
             <span>
-                <a routerLink="admin/verification" mat-button>
-                    <mat-icon>order</mat-icon>Verification</a>
+                <a routerLink="admin/verification" mat-button>Verification</a>
             </span>
             <span>
-                <a routerLink="admin/activation" mat-button>
-                    <mat-icon>activation</mat-icon>Activation</a>
+                <a routerLink="admin/activation" mat-button>Activation</a>
             </span>
             <span>
-                <a routerLink="admin/all-orders" mat-button>
-                    <mat-icon>previous</mat-icon>Orders</a>
+                <a routerLink="admin/all-orders" mat-button>Orders</a>
             </span>
             <span>
-                <a routerLink="admin/create-product" mat-button>
-                    <mat-icon>cart</mat-icon>Create Product</a>
+                <a routerLink="admin/create-product" mat-button>Create Product</a>
             </span>
         </div>
         <span class="align-right"></span>
